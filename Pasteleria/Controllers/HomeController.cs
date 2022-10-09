@@ -33,5 +33,12 @@ namespace Pasteleria.Controllers
 
             return View();
         }
+
+        public ActionResult Principal()
+        {
+            ViewBag.Message = "index_prueba";
+
+            return View();
+        }
     }
 }
