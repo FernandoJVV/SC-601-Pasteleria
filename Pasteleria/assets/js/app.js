@@ -37,52 +37,21 @@ var App = function() {
             $('.sidebarCollapse').on('click', function (sidebar) {
                 sidebar.preventDefault();
 
-                get_CompactSubmenuShow = document.querySelector('#compact_submenuSidebar');
+                //get_CompactSubmenuShow = document.querySelector('#compact_submenuSidebar');
                 get_overlay = document.querySelector('.overlay');
-                get_mainContainer = document.querySelector('.main-container')
-                if (get_CompactSubmenuShow.classList.contains('show') || get_CompactSubmenuShow.classList.contains('hide-sub') ) {
-                    console.log('main1');
-
-                    if (get_CompactSubmenuShow.classList.contains('show')) {
-                        get_CompactSubmenuShow.classList.remove("show");
-                        get_overlay.classList.remove("show");
-                        get_CompactSubmenuShow.classList.add("hide-sub");
-                        return;
-                            console.log('1')
-                    }
-                    if (get_CompactSubmenuShow.classList.contains('hide-sub')) {
-
-                        if (get_mainContainer.classList.contains('sidebar-closed')) {
-                            get_mainContainer.classList.remove("sidebar-closed");
-                            get_mainContainer.classList.add("sbar-open");
-                            console.log('2')
-                            return;
-                        }
-                        if (get_mainContainer.classList.contains('sbar-open')) {
-                            get_mainContainer.classList.remove("sbar-open");
-                            get_CompactSubmenuShow.classList.remove("hide-sub");
-                            get_CompactSubmenuShow.classList.add("show");
-                            get_overlay.classList.add("show");
-                            console.log('3')
-                            return;
-                        }
-                        $(Selector.mainContainer).addClass("sidebar-closed");
-                    }
-
-                } else  {
-                    console.log('main2');
-                    $(Selector.mainContainer).toggleClass("sidebar-closed");
-                    $(Selector.mainContainer).toggleClass("sbar-open");
-                    if (window.innerWidth <= 991) {
-                        if (get_overlay.classList.contains('show')) {
+                get_mainContainer = document.querySelector('.main-container');
+                //console.log('main2');
+                $(Selector.mainContainer).toggleClass("sidebar-closed");
+                $(Selector.mainContainer).toggleClass("sbar-open");
+                if (window.innerWidth <= 991) {
+                    if (get_overlay.classList.contains('show')) {
                             get_overlay.classList.remove('show');
                         } else {
                             get_overlay.classList.add('show');
                         }
-                    }
-                    $('html,body').toggleClass('sidebar-noneoverflow');
-                    $('footer .footer-section-1').toggleClass('f-close');
                 }
+                $('html,body').toggleClass('sidebar-noneoverflow');
+                $('footer .footer-section-1').toggleClass('f-close');
             });
         },
         overlay: function() {
@@ -96,7 +65,7 @@ var App = function() {
                 $('.overlay').removeClass('show');
                 $('html,body').removeClass('sidebar-noneoverflow');
 
-                $('#compact_submenuSidebar').removeClass('show');
+                //$('#compact_submenuSidebar').removeClass('show');
             });
         },
         search: function() {
@@ -126,7 +95,7 @@ var App = function() {
 
             });
         },
-        subCatScroll: function() {
+        /*subCatScroll: function() {
             const submenuSidebar = new PerfectScrollbar('#compact_submenuSidebar', {
                 wheelSpeed:.5,
                 swipeEasing:!0,
@@ -135,36 +104,36 @@ var App = function() {
                 suppressScrollX: true
 
             });
-        },
+        },*/
         onSidebarHover: function() {
             var getMenu = document.querySelectorAll('.menu');
 
             for (var i = 0; i < getMenu.length; i++) {
                 getMenu[i].addEventListener('mouseenter', function() {
                     getHref = this.querySelectorAll('.menu-toggle')[0].getAttribute('href');
-                    getElement = document.querySelectorAll('#compact_submenuSidebar > ' + getHref)[0];
-                    getCompactSubmenu = document.querySelector('#compact_submenuSidebar');
+                    //getElement = document.querySelectorAll('#compact_submenuSidebar > ' + getHref)[0];
+                    //getCompactSubmenu = document.querySelector('#compact_submenuSidebar');
                     getOverlayElement = document.querySelector('.overlay');
-                    getElementActiveClass = document.querySelector('#compact_submenuSidebar > .show');
+                    //getElementActiveClass = document.querySelector('#compact_submenuSidebar > .show');
                     get_mainContainer = document.querySelector('.main-container')
 
-                    if (getCompactSubmenu) {
+                   /* if (getCompactSubmenu) {
                         getCompactSubmenu.classList.add("show");
                         getOverlayElement.classList.add('show');
                         getCompactSubmenu.classList.remove('hide-sub');
                         get_mainContainer.classList.remove('sbar-open');
-                    }
+                    }*/
 
-                    if (getElementActiveClass) {
+/*                    if (getElementActiveClass) {
                         getElementActiveClass.classList.remove("show");
-                    }
+                    }*/
 
-                    getElement.className += " show";
+                    //getElement.className += " show";
 
 
                     console.log(this.querySelectorAll('.menu-toggle')[0].getAttribute('href'));
                     console.log(getHref);
-                    console.log(document.querySelectorAll('#compact_submenuSidebar > ' + getHref)[0])
+                    //console.log(document.querySelectorAll('#compact_submenuSidebar > ' + getHref)[0])
                 })
                 getMenu[i].addEventListener('click', function(ev) {
                     ev.preventDefault();
@@ -173,7 +142,7 @@ var App = function() {
 
         },
         preventScrollBody: function() {
-            $('#compactSidebar, #compact_submenuSidebar').bind('mousewheel DOMMouseScroll', function(e) {
+            $('#compactSidebar').bind('mousewheel DOMMouseScroll', function(e) {
                 var scrollTo = null;
 
                 if (e.type == 'mousewheel') {
@@ -248,7 +217,7 @@ var App = function() {
                     $('.main-container').removeClass('sbar-open');
                     $("#container").addClass("sidebar-closed");
                     $('.overlay').removeClass('show');
-                    $('#compact_submenuSidebar').removeClass('show')
+                    //$('#compact_submenuSidebar').removeClass('show')
 
                 } else {
                     $(".navbar").removeClass("expand-header");
@@ -277,7 +246,7 @@ var App = function() {
         function sidebarMobCheck() {
             if (window.innerWidth <= 991 ) {
 
-                if ( $('.main-container').hasClass('sbar-open') || $('#compact_submenuSidebar').hasClass('show') ) {
+                if ( $('.main-container').hasClass('sbar-open') ) {
                     return;
                 } else {
                     sidebarCloser()
@@ -317,7 +286,6 @@ var App = function() {
                 In Built Functionality fn
             */
             inBuiltfunctionality.mainCatActivateScroll();
-            inBuiltfunctionality.subCatScroll();
             inBuiltfunctionality.preventScrollBody();
             inBuiltfunctionality.languageDropdown();
             inBuiltfunctionality.onSidebarHover();
