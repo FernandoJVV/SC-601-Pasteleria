@@ -105,6 +105,7 @@ var App = function() {
 
             });
         },*/
+        /*
         onSidebarHover: function() {
             var getMenu = document.querySelectorAll('.menu');
 
@@ -115,7 +116,7 @@ var App = function() {
                     //getCompactSubmenu = document.querySelector('#compact_submenuSidebar');
                     getOverlayElement = document.querySelector('.overlay');
                     //getElementActiveClass = document.querySelector('#compact_submenuSidebar > .show');
-                    get_mainContainer = document.querySelector('.main-container')
+                    get_mainContainer = document.querySelector('.main-container')*/
 
                    /* if (getCompactSubmenu) {
                         getCompactSubmenu.classList.add("show");
@@ -130,7 +131,7 @@ var App = function() {
 
                     //getElement.className += " show";
 
-
+        /*
                     console.log(this.querySelectorAll('.menu-toggle')[0].getAttribute('href'));
                     console.log(getHref);
                     //console.log(document.querySelectorAll('#compact_submenuSidebar > ' + getHref)[0])
@@ -140,7 +141,7 @@ var App = function() {
                 })
             }
 
-        },
+        },*/
         preventScrollBody: function() {
             $('#compactSidebar').bind('mousewheel DOMMouseScroll', function(e) {
                 var scrollTo = null;
@@ -288,7 +289,7 @@ var App = function() {
             inBuiltfunctionality.mainCatActivateScroll();
             inBuiltfunctionality.preventScrollBody();
             inBuiltfunctionality.languageDropdown();
-            inBuiltfunctionality.onSidebarHover();
+            //inBuiltfunctionality.onSidebarHover();
         }
     }
 
