@@ -11,7 +11,8 @@
             <img src="https://cdn-icons-png.flaticon.com/512/1165/1165674.png" width="55" height="55" class="d-inline-block align-top" alt="">
             <h1 class="d-inline text-center"> Mantenimiento de Usuarios</h1>
         </a>
-        <button class="btn btn-info pull-right mr-3">Agregar Nuevo Usuario</button>
+        @Html.ActionLink("Agregar Nuevo Usuario", "UsuariosRegistrar", "Usuario", null, new { @class = "btn btn-info pull-right mr-3" })
+        
     </nav>
 
     <!--Tabla-->
@@ -45,8 +46,9 @@
                                     @Html.DisplayFor(modelItem => item.estado)
                                 </td>
                                 <td>
-
-                                    <button type="button" class="btn btn-primary" data-toggle="modal">
+                                    @Html.ActionLink("Actualizar", "UsuariosActualizar", "Usuario", new { id = item.id }, new { @class = "btn btn-dark" }) |
+                                    <!--En progreso el inactivar-->
+                                    <button type="button" class="btn btn-danger" data-toggle="modal">
                                         Inactivar
                                     </button>
                                 </td>

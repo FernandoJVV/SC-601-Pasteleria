@@ -958,6 +958,8 @@
     <Content Include="Views\Home\Principal.cshtml" />
     <Content Include="Views\Home\prueba.cshtml" />
     <Content Include="Views\Usuario\UsuariosConsulta.cshtml" />
+    <Content Include="Views\Usuario\UsuariosRegistrar.cshtml" />
+    <Content Include="Views\Usuario\UsuariosActualizar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

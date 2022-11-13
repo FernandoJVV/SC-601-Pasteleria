@@ -19,7 +19,21 @@ namespace Pasteleria.Controllers
                 return View("Error");
         }
 
+        public ActionResult UsuariosRegistrar()
+        {
+            var opciones = new List<SelectListItem>();
+            opciones.Add(new SelectListItem { Text = "Administrador", Value = "1" });
+            opciones.Add(new SelectListItem { Text = "Usuario", Value = "2" });
 
+            ViewBag.ComboTiposUsuario = opciones;
+
+            return View();
+        }
+
+        public ActionResult UsuariosActualizar(int id)
+        {
+            return View();
+        }
 
     }
 }
