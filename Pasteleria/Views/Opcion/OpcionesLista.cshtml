@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Pasteleria.Models.Objetos.OpcionObj>
+
+@{
+    ViewBag.Title = "Mantenimiento de Opciones para Pasteles";
+}
+
+<div class="jumbotron">
+    <!--Encabezado-->
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img src="https://cdn-icons-png.flaticon.com/512/1165/1165674.png" width="55" height="55" class="d-inline-block align-top" alt="">
+            <h1 class="d-inline text-center"> Mantenimiento de Opciones</h1>
+        </a>
+        @Html.ActionLink("Agregar nueva opcion", "Create", null, new { @class = "btn btn-dark pull-right mr-3" })
+
+    </nav>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive-md">
+                <table class="table table-hover table-bordered table-striped mt-3">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>
+                                ID Opcion
+                            </th>
+                            <th>
+                                Categoria
+                            </th>
+                            <th>
+                                Descripcion
+                            </th>
+                            <th>
+                                Precio
+                            </th>
+                            <th>
+                                Activo
+                            </th>
+                            <th>Acciones</th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OpcionId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CategoriaId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Descripcion)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Precio)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Estado)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Editar", "EditarOpcion", new { id = item.OpcionId }, new { @class = "btn btn-dark" }) |
+                                    @Html.ActionLink("Eliminar", "EliminarOpcion", new { id = item.OpcionId }, new { @class = "btn btn-danger" })
+                                </td>
+                            </tr>
+                        }
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
