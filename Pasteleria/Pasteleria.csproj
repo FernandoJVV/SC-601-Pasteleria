@@ -124,13 +124,16 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\OpcionController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Modelos\OpcionModel.cs" />
     <Compile Include="Models\Modelos\TipoUsuarioModel.cs" />
     <Compile Include="Models\Modelos\UsuarioModel.cs" />
+    <Compile Include="Models\Objetos\OpcionObj.cs" />
     <Compile Include="Models\Objetos\UsuarioObj.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -960,6 +963,7 @@
     <Content Include="Views\Usuario\UsuariosConsulta.cshtml" />
     <Content Include="Views\Usuario\UsuariosRegistrar.cshtml" />
     <Content Include="Views\Usuario\UsuariosActualizar.cshtml" />
+    <Content Include="Views\Opcion\OpcionesLista.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
