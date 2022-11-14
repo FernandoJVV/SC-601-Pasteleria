@@ -177,6 +177,7 @@
     </Compile>
     <Compile Include="Models\Modelos\TipoUsuarioModel.cs" />
     <Compile Include="Models\Modelos\UsuarioModel.cs" />
+    <Compile Include="Models\Objetos\FiltroSesiones.cs" />
     <Compile Include="Models\Objetos\UsuarioObj.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

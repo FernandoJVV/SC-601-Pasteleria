@@ -12,6 +12,7 @@ namespace Pasteleria.Controllers
     {
         UsuarioModel modelUsuario = new UsuarioModel();
 
+     
         public ActionResult Validar(UsuarioObj usuario) {
             var resultado = modelUsuario.ValidarUsuario(usuario);
 
@@ -25,6 +26,7 @@ namespace Pasteleria.Controllers
                 return RedirectToAction("Index", "Home");
         }
 
+        [FiltroSesiones]
         public ActionResult UsuariosConsulta()
         {
             var resultado = modelUsuario.UsuariosLista();
@@ -34,6 +36,7 @@ namespace Pasteleria.Controllers
                 return View("Error");
         }
 
+        [FiltroSesiones]
         public ActionResult UsuariosRegistrar()
         {
             var opciones = new List<SelectListItem>();
@@ -45,6 +48,7 @@ namespace Pasteleria.Controllers
             return View();
         }
 
+        [FiltroSesiones]
         public ActionResult UsuariosActualizar(int id)
         {
             return View();

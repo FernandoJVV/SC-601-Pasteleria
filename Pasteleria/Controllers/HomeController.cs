@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pasteleria.Models.Objetos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -34,6 +35,7 @@ namespace Pasteleria.Controllers
             return View();
         }
 
+        [FiltroSesiones]
         public ActionResult Principal()
         {
             ViewBag.Message = "index_prueba";
