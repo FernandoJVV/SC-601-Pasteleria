@@ -1003,14 +1003,12 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Principal.cshtml" />
-    <Content Include="Views\Home\prueba.cshtml" />
     <Content Include="Views\Usuario\UsuariosConsulta.cshtml" />
     <Content Include="Views\Usuario\UsuariosRegistrar.cshtml" />
     <Content Include="Views\Usuario\UsuariosActualizar.cshtml" />
     <Content Include="Views\Opcion\OpcionesLista.cshtml" />
+    <Content Include="Views\Home\Registrar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
