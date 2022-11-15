@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using Newtonsoft.Json;
+using System.Web.Mvc;
 
 namespace Pasteleria.Models.Modelos
 {
@@ -34,5 +35,25 @@ namespace Pasteleria.Models.Modelos
             }
 
         }
+
+        public List<SelectListItem> ListarTipoUsuarios()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "https://localhost:44377/api/Usuario/ListarTipoUsuarios";
+                //string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+
+                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    //Deserialización System.Net.Http.Formatting.Extension
+                    return respuesta.Content.ReadAsAsync<List<SelectListItem>>().Result;
+                }
+                return null;
+            }
+        }
     }
+
 }

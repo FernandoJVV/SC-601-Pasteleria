@@ -21,9 +21,9 @@ namespace Pasteleria.Controllers
 
         public ActionResult UsuariosRegistrar()
         {
-            var opciones = new List<SelectListItem>();
-            opciones.Add(new SelectListItem { Text = "Administrador", Value = "1" });
-            opciones.Add(new SelectListItem { Text = "Usuario", Value = "2" });
+            var opciones = modelUsuario.ListarTipoUsuarios();
+            //opciones.Add(new SelectListItem { Text = "Administrador", Value = "1" });
+           //opciones.Add(new SelectListItem { Text = "Usuario", Value = "2" });
 
             ViewBag.ComboTiposUsuario = opciones;
 
