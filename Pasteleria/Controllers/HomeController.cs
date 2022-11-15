@@ -24,5 +24,12 @@ namespace Pasteleria.Controllers
         public ActionResult Registrar() {
             return View();
         }
+
+        public ActionResult Logout()
+        {
+            Session.Abandon();
+            Session.Clear();
+            return RedirectToAction("Index","Home");
+        }
     }
 }
