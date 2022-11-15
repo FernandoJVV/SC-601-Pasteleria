@@ -15,7 +15,7 @@ namespace Pasteleria.Models.Modelos
         {
             using (HttpClient client = new HttpClient())
             {
-                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "https://localhost:44377/api/Opcion/Lista";
+                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Opcion/Lista";
                 //string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
                 //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);

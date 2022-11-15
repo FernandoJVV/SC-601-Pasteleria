@@ -14,6 +14,12 @@ namespace Pasteleria
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "Opciones",
+                url: "configuraciones",
+                defaults: new { controller = "Opcion", action = "OpcionesLista" }
+                );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
