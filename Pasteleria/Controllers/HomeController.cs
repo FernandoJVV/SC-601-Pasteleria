@@ -42,5 +42,12 @@ namespace Pasteleria.Controllers
 
             return View();
         }
+
+        public ActionResult Logout()
+        {
+            Session.Abandon();
+            Session.Clear();
+            return RedirectToAction("Index","Home");
+        }
     }
 }
