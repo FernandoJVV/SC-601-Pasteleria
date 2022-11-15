@@ -1010,6 +1010,7 @@
     <Content Include="Views\Usuario\UsuariosActualizar.cshtml" />
     <Content Include="Views\Opcion\OpcionesLista.cshtml" />
     <Content Include="Views\Home\Registrar.cshtml" />
+    <Content Include="Views\Shared\_LayoutWelcome.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
