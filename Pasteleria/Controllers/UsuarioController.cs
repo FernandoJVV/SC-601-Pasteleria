@@ -1,4 +1,5 @@
 ﻿using Pasteleria.Models.Modelos;
+using Pasteleria.Models.Objetos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,22 @@ namespace Pasteleria.Controllers
     public class UsuarioController : Controller
     {
         UsuarioModel modelUsuario = new UsuarioModel();
+
+     
+        public ActionResult Validar(UsuarioObj usuario) {
+            var resultado = modelUsuario.ValidarUsuario(usuario);
+
+            if (resultado != null && resultado.token != null) {
+                Session["CodigoSeguridad"] = resultado.token;
+                Session["CorreoUsuario"] = resultado.correo;
+                Session["RolUsuario"] = resultado.tipoUsuario.descripcion;
+                return RedirectToAction("Principal", "Home");
+            }
+            else
+                return RedirectToAction("Index", "Home");
+        }
+
+        [FiltroSesiones]
         public ActionResult UsuariosConsulta()
         {
             var resultado = modelUsuario.UsuariosLista();
@@ -19,6 +36,7 @@ namespace Pasteleria.Controllers
                 return View("Error");
         }
 
+        [FiltroSesiones]
         public ActionResult UsuariosRegistrar()
         {
             var opciones = modelUsuario.ListarTipoUsuarios();
@@ -30,6 +48,7 @@ namespace Pasteleria.Controllers
             return View();
         }
 
+        [FiltroSesiones]
         public ActionResult UsuariosActualizar(int id)
         {
             return View();
