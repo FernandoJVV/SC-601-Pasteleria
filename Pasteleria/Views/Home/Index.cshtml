@@ -1,11 +1,10 @@
 @model Pasteleria.Models.Objetos.UsuarioObj
 @{
-    Layout = "_LayoutWelcome";
-
+    Layout = "~/Views/Shared/_LayoutWelcome.cshtml";
 }
 
 <h1 class="">Login <a href="https://www.facebook.com/artedulis" target="_blank"><span class="brand-name">Art Edulis</span></a></h1>
-<p class="signup-link">&#191;No tienes una cuenta? <a href="auth_register.html">Crea una cuenta</a></p>
+<p class="signup-link">&#191;No tienes una cuenta? <a href="@Url.Action("Registrar","Home")">Crea una cuenta</a></p>
 
 @using (Html.BeginForm("Validar", "Usuario", FormMethod.Post)) {
     @Html.AntiForgeryToken();

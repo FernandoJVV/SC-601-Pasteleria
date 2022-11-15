@@ -1,4 +1,6 @@
-﻿using Pasteleria.Models.Objetos;
+﻿using Microsoft.Ajax.Utilities;
+using Pasteleria.Models.Objetos;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IdentityModel.Tokens.Jwt;
@@ -55,6 +57,24 @@ namespace Pasteleria.Models.Modelos
                     return usuario;
                 }
                 return null;
+            }
+        }
+
+        public bool NuevoRegistro(UsuarioObj usuario) {
+            using (HttpClient client = new HttpClient()) {
+                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/NuevoRegistro";
+
+                //Serialización System.Net.Http.Json;
+                JsonContent contenido = JsonContent.Create(usuario);
+
+                HttpResponseMessage respuesta = client.PostAsync(rutaApi, contenido).Result;
+                if (respuesta.IsSuccessStatusCode) {
+                    var textoRespuesta = respuesta.Content.ReadAsAsync<string>().Result;
+                    if (textoRespuesta == null) {
+                        return false;
+                    }
+                }
+                return true;
             }
         }
     }

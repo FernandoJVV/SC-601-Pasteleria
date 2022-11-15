@@ -24,7 +24,7 @@
             <div class="form-form-wrap">
                 <div class="form-container">
                     <div class="form-content">
-                        @RenderBody();
+                        @RenderBody()
                         <p class="terms-conditions"> &COPY; 2022 Todos los derechos reservados. <a href="https://www.facebook.com/artedulis" target="_blank">Art Edulis</a>.</p>
                     </div>
                 </div>
@@ -41,9 +41,14 @@
     <script src="~/assets/js/libs/jquery-3.1.1.min.js"></script>
     <script src="~/bootstrap/js/popper.min.js"></script>
     <script src="~/bootstrap/js/bootstrap.min.js"></script>
-
+    <script src="~/plugins/font-icons/feather/feather.min.js"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
     <script src="~/assets/js/authentication/form-1.js"></script>
-
+    <script>
+        $(document).ready(function () {
+            App.init();
+        });
+        feather.replace()
+    </script>
 </body>
 </html>
