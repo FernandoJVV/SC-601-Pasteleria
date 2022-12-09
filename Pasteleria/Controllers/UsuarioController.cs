@@ -58,7 +58,7 @@ namespace Pasteleria.Controllers
             var resultado = modelUsuario.RegistrarUsuario(obj);
 
             if (resultado != null)
-                return RedirectToAction("UsariosConsulta", "Usuario");
+                return RedirectToAction("UsuariosConsulta", "Usuario");
             else
                 return View("Error");
             
@@ -98,6 +98,22 @@ namespace Pasteleria.Controllers
             else
                 return View("Error");   
 
+        }
+
+        [FiltroSesiones]
+        [HttpPost]
+        public ActionResult CambiarEstadoUsuario(int id)
+        {
+            var obj = new UsuarioObj();
+            obj.id = id;
+            obj.correo = Session["CorreoUsuario"].ToString();
+
+            var resultado = modelUsuario.CambiarEstadoUsuario(obj);
+
+            if (resultado != null)
+                return Json("OK", JsonRequestBehavior.AllowGet);
+            else
+                return Json(null, JsonRequestBehavior.DenyGet);
         }
 
 

@@ -21,7 +21,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="table-responsive-md">
-                <table class="table table-hover table-bordered table-striped mt-3">
+                <table class="table table-hover table-bordered table-striped mt-3" id="tablaUsuarios">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Correo</th>
@@ -53,20 +53,18 @@
                                     {
                                         @Html.ActionLink("Actualizar", "UsuariosActualizar", "Usuario", new { id = item.id }, new { @class = "btn btn-dark" })
                                         <!--En progreso el inactivar-->
-                                        <button type="button" class="btn btn-danger" data-toggle="modal">
-                                            Inactivar
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-book-id="@item.id">
+                                            Cambiar Estado
                                         </button>
                                     }
-
                                     else
                                     {
                                         @Html.ActionLink("Actualizar", "UsuariosActualizar", "Usuario", new { id = item.id }, new { @class = "btn btn-dark", @style = "cursor:not-allowed" })
                                         <!--En progreso el inactivar-->
-                                        <button type="button" class="btn btn-danger" style="cursor:not-allowed" >
-                                            Inactivar
+                                        <button type="button" class="btn btn-danger" style="cursor:not-allowed">
+                                            Cambiar Estado
                                         </button>
                                     }
-
 
                                 </td>
                             </tr>
@@ -80,3 +78,60 @@
     </div>
 </div>
 
+@section scripts
+{
+    <script>
+
+        $('#exampleModal').on('show.bs.modal', function (e) {
+            var bookId = $(e.relatedTarget).data('book-id');
+            $("#id").val(bookId);
+        });
+
+        function CambiarEstado() {
+
+            $.ajax({
+                type: 'POST',
+                url: '/Usuario/CambiarEstadoUsuario',
+                data: {
+                    "id": $("#id").val()
+                },
+                dataType: 'json',
+                success: function (data) {
+                    window.location.href = "/Usuario/UsuariosConsulta"
+                },
+                error: function (data) {
+                    alert('Error')
+                }
+            });
+
+        }
+
+    </script>
+}
+
+@section modals
+{
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Cambiar Estado</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <p>Está seguro de cambiar el estado del usuario?</p>
+
+                    @Html.Hidden("id", "")
+
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-primary" value="Continuar" onclick="CambiarEstado();" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

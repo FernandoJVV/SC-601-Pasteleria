@@ -65,7 +65,7 @@ namespace Pasteleria.Models.Modelos
                 HttpResponseMessage respuesta = client.PostAsync(rutaApi, contenido).Result;   
                 if (respuesta.IsSuccessStatusCode) {
                     var Respuesta = respuesta.Content.ReadAsAsync<UsuarioObj>().Result;
-                    if (Respuesta == null) {
+                    if (Respuesta.token == null) {
                         return null;
                     }
                     var jwt = new JwtSecurityTokenHandler().ReadJwtToken(Respuesta.token);
@@ -110,6 +110,8 @@ namespace Pasteleria.Models.Modelos
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/ActualizarUsuario";
                 //string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
+                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
                 //Serialización System.Net.Http.Json;
                 JsonContent contenido = JsonContent.Create(obj);
 
@@ -130,11 +132,37 @@ namespace Pasteleria.Models.Modelos
             using (HttpClient client = new HttpClient())
             {
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/RegistrarUsuario";
+                //string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+
+                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 //Serialización System.Net.Http.Json;
                 JsonContent contenido = JsonContent.Create(obj);
 
                 HttpResponseMessage respuesta = client.PostAsync(rutaApi, contenido).Result;
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    //Deserialización System.Net.Http.Formatting.Extension
+                    return respuesta.Content.ReadAsAsync<UsuarioObj>().Result;
+                }
+                return null;
+            }
+        }
+
+        public UsuarioObj CambiarEstadoUsuario(UsuarioObj obj)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/CambiarEstadoUsuario";
+                //string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+
+                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                //Serialización System.Net.Http.Json;
+                JsonContent contenido = JsonContent.Create(obj);
+
+                HttpResponseMessage respuesta = client.PutAsync(rutaApi, contenido).Result;
 
                 if (respuesta.IsSuccessStatusCode)
                 {
