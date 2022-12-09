@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace Pasteleria.Controllers
 {
+    [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
     public class UsuarioController : Controller
     {
         UsuarioModel modelUsuario = new UsuarioModel();
@@ -20,6 +21,7 @@ namespace Pasteleria.Controllers
                 Session["CodigoSeguridad"] = resultado.token;
                 Session["CorreoUsuario"] = resultado.correo;
                 Session["RolUsuario"] = resultado.tipoUsuario.descripcion;
+                Session["IdUsuario"] = (int)resultado.id;
                 return RedirectToAction("Principal", "Home");
             }
             else
@@ -27,6 +29,7 @@ namespace Pasteleria.Controllers
         }
 
         [FiltroSesiones]
+        [HttpGet]
         public ActionResult UsuariosConsulta()
         {
             var resultado = modelUsuario.UsuariosLista();
@@ -37,6 +40,7 @@ namespace Pasteleria.Controllers
         }
 
         [FiltroSesiones]
+        [HttpGet]
         public ActionResult UsuariosRegistrar()
         {
             //Consulta tipos de usuario y llena select
@@ -47,6 +51,7 @@ namespace Pasteleria.Controllers
         }
 
         [FiltroSesiones]
+        [HttpGet]
         public ActionResult UsuariosActualizar(int id)
         {
 
@@ -66,6 +71,21 @@ namespace Pasteleria.Controllers
                 return View("Error");
             }
         }
+
+
+        [FiltroSesiones]
+        [HttpPost]
+        public ActionResult UsuariosActualizar(UsuarioObj obj)
+        {
+            var resultado = modelUsuario.ActualizarUsuario(obj);
+
+            if (resultado != null)
+                return RedirectToAction("UsuariosConsulta", "Usuario");
+            else
+                return View("Error");   
+
+        }
+
 
     }
 }

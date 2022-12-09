@@ -64,15 +64,16 @@ namespace Pasteleria.Models.Modelos
 
                 HttpResponseMessage respuesta = client.PostAsync(rutaApi, contenido).Result;   
                 if (respuesta.IsSuccessStatusCode) {
-                    var tokenRespuesta = respuesta.Content.ReadAsAsync<string>().Result;
-                    if (tokenRespuesta == null) {
+                    var Respuesta = respuesta.Content.ReadAsAsync<UsuarioObj>().Result;
+                    if (Respuesta == null) {
                         return null;
                     }
-                    var jwt = new JwtSecurityTokenHandler().ReadJwtToken(tokenRespuesta);
+                    var jwt = new JwtSecurityTokenHandler().ReadJwtToken(Respuesta.token);
                     string role = jwt.Claims.First(c => c.Type == ClaimTypes.Role).Value;
                     TipoUsuarioModel tipoUsuarioModel = new TipoUsuarioModel(0, role);
                     usuario.tipoUsuario = tipoUsuarioModel;
-                    usuario.token = tokenRespuesta;
+                    usuario.token = Respuesta.token;
+                    usuario.id = Respuesta.id;
                     //Deserialización System.Net.Http.Formatting.Extension
                     //return respuesta.Content.ReadAsAsync<RespuestaUsuario>().Result;
                     return usuario;
@@ -100,6 +101,31 @@ namespace Pasteleria.Models.Modelos
                 return null;
             }
         }
+
+
+        public UsuarioObj ActualizarUsuario(UsuarioObj obj)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/ActualizarUsuario";
+                //string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+
+                //Serialización System.Net.Http.Json;
+                JsonContent contenido = JsonContent.Create(obj);
+
+                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                HttpResponseMessage respuesta = client.PutAsync(rutaApi, contenido).Result;
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    //Deserialización System.Net.Http.Formatting.Extension
+                    return respuesta.Content.ReadAsAsync<UsuarioObj>().Result;
+                }
+                return null;
+            }
+        }
+
+
     }
 
 }

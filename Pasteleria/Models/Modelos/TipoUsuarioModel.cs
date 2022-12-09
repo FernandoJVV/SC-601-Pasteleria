@@ -15,5 +15,9 @@ namespace Pasteleria.Models.Modelos
             this.id = id;
             this.descripcion = descripcion;
         }
+
+        public TipoUsuarioModel()
+        {
+        }
     }
 }

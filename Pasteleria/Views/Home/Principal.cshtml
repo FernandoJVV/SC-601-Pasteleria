@@ -1,5 +1,13 @@
 ﻿
 <div class="jumbotron">
-  <h1>Ejemplo</h1>
+    <h1>Ejemplo</h1>
 </div>
+@Html.AntiForgeryToken()
 
+
+<!--imprime variables de sesion-->
+@{ var session = HttpContext.Current.Session; }
+@foreach (string key in session.Keys)
+{
+    <p>Key: @key - Value: @session[key].ToString()</p>
+}

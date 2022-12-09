@@ -4,6 +4,8 @@
     ViewBag.Title = "UsuariosConsulta";
 }
 
+@Html.AntiForgeryToken()
+
 <div class="jumbotron">
     <!--Encabezado-->
     <nav class="navbar navbar-light bg-light">
@@ -12,7 +14,7 @@
             <h1 class="d-inline text-center"> Mantenimiento de Usuarios</h1>
         </a>
         @Html.ActionLink("Agregar Nuevo Usuario", "UsuariosRegistrar", "Usuario", null, new { @class = "btn btn-info pull-right mr-3" })
-        
+
     </nav>
 
     <!--Tabla-->
@@ -46,11 +48,26 @@
                                     @Html.DisplayFor(modelItem => item.estado)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Actualizar", "UsuariosActualizar", "Usuario", new { id = item.id }, new { @class = "btn btn-dark" }) |
-                                    <!--En progreso el inactivar-->
-                                    <button type="button" class="btn btn-danger" data-toggle="modal">
-                                        Inactivar
-                                    </button>
+
+                                    @if (Session["IdUsuario"].ToString() != item.id.ToString())
+                                    {
+                                        @Html.ActionLink("Actualizar", "UsuariosActualizar", "Usuario", new { id = item.id }, new { @class = "btn btn-dark" })
+                                        <!--En progreso el inactivar-->
+                                        <button type="button" class="btn btn-danger" data-toggle="modal">
+                                            Inactivar
+                                        </button>
+                                    }
+
+                                    else
+                                    {
+                                        @Html.ActionLink("Actualizar", "UsuariosActualizar", "Usuario", new { id = item.id }, new { @class = "btn btn-dark", @style = "cursor:not-allowed" })
+                                        <!--En progreso el inactivar-->
+                                        <button type="button" class="btn btn-danger" style="cursor:not-allowed" >
+                                            Inactivar
+                                        </button>
+                                    }
+
+
                                 </td>
                             </tr>
                         }

@@ -1,4 +1,5 @@
-﻿using Pasteleria.Models.Objetos;
+﻿using Pasteleria.Models.Modelos;
+using Pasteleria.Models.Objetos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,26 +8,22 @@ using System.Web.Mvc;
 
 namespace Pasteleria.Controllers
 {
+    [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
     public class HomeController : Controller
     {
+
+        //Instancia
+        UsuarioModel modelUsuario = new UsuarioModel();
+
+
+        [HttpGet]
         public ActionResult Index()
         {
+            Session.Clear();
+            Session.Abandon();
             return View();
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
 
         public ActionResult prueba()
         {
@@ -36,11 +33,12 @@ namespace Pasteleria.Controllers
         }
 
         [FiltroSesiones]
+        [HttpGet]
         public ActionResult Principal()
         {
-            ViewBag.Message = "index_prueba";
-
+            
             return View();
         }
+
     }
 }
