@@ -14,7 +14,7 @@
     </nav>
 
     <!--Form-->
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("UsuariosRegistrar", "Usuario", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
 

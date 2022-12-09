@@ -125,7 +125,25 @@ namespace Pasteleria.Models.Modelos
             }
         }
 
+        public UsuarioObj RegistrarUsuario(UsuarioObj obj)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/RegistrarUsuario";
 
+                //Serialización System.Net.Http.Json;
+                JsonContent contenido = JsonContent.Create(obj);
+
+                HttpResponseMessage respuesta = client.PostAsync(rutaApi, contenido).Result;
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    //Deserialización System.Net.Http.Formatting.Extension
+                    return respuesta.Content.ReadAsAsync<UsuarioObj>().Result;
+                }
+                return null;
+            }
+        }
     }
 
 }

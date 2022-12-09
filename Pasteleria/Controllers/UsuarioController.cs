@@ -51,6 +51,20 @@ namespace Pasteleria.Controllers
         }
 
         [FiltroSesiones]
+        [HttpPost]
+        public ActionResult UsuariosRegistrar(UsuarioObj obj)
+        {
+
+            var resultado = modelUsuario.RegistrarUsuario(obj);
+
+            if (resultado != null)
+                return RedirectToAction("UsariosConsulta", "Usuario");
+            else
+                return View("Error");
+            
+        }
+
+        [FiltroSesiones]
         [HttpGet]
         public ActionResult UsuariosActualizar(int id)
         {
