@@ -39,19 +39,32 @@ namespace Pasteleria.Controllers
         [FiltroSesiones]
         public ActionResult UsuariosRegistrar()
         {
+            //Consulta tipos de usuario y llena select
             var opciones = modelUsuario.ListarTipoUsuarios();
-            //opciones.Add(new SelectListItem { Text = "Administrador", Value = "1" });
-           //opciones.Add(new SelectListItem { Text = "Usuario", Value = "2" });
-
             ViewBag.ComboTiposUsuario = opciones;
-
+            
             return View();
         }
 
         [FiltroSesiones]
         public ActionResult UsuariosActualizar(int id)
         {
-            return View();
+
+            //Consulta tipos de usuario y llena select
+            var opciones = modelUsuario.ListarTipoUsuarios();
+            ViewBag.ComboTiposUsuario = opciones;
+
+            //Consulta usuario a editar
+            var resultado = modelUsuario.ConsultarUsuarioID(id);
+
+            if (resultado != null)
+            {
+                return View(resultado);
+            } 
+            else
+            {
+                return View("Error");
+            }
         }
 
     }

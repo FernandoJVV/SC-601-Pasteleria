@@ -7,6 +7,8 @@ using System.Net.Http.Json;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Http.Headers;
+using System.Web;
 
 namespace Pasteleria.Models.Modelos
 {
@@ -37,7 +39,7 @@ namespace Pasteleria.Models.Modelos
         {
             using (HttpClient client = new HttpClient())
             {
-                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "https://localhost:44377/api/Usuario/ListarTipoUsuarios";
+                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/ListarTipoUsuarios";
                 //string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
                 //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -74,6 +76,26 @@ namespace Pasteleria.Models.Modelos
                     //Deserialización System.Net.Http.Formatting.Extension
                     //return respuesta.Content.ReadAsAsync<RespuestaUsuario>().Result;
                     return usuario;
+                }
+                return null;
+            }
+        }
+
+
+        public UsuarioObj ConsultarUsuarioID (int id)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/ConsultarUsuarioID?id=" + id;
+                //string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+
+                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    //Deserialización System.Net.Http.Formatting.Extension
+                    return respuesta.Content.ReadAsAsync<UsuarioObj>().Result;
                 }
                 return null;
             }
