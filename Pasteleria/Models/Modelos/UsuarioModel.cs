@@ -1,18 +1,12 @@
 ﻿using Pasteleria.Models.Objetos;
 using System.Collections.Generic;
 using System.Configuration;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Net.Http;
-<<<<<<< HEAD
-using System.Web;
-using System.Web.Http;
-using Newtonsoft.Json;
 using System.Web.Mvc;
-=======
 using System.Net.Http.Json;
 using System.Security.Claims;
->>>>>>> dba9cbc2e01bcef9b503c4bf8fa892c39f269a52
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 
 namespace Pasteleria.Models.Modelos
 {
@@ -39,7 +33,6 @@ namespace Pasteleria.Models.Modelos
 
         }
 
-<<<<<<< HEAD
         public List<SelectListItem> ListarTipoUsuarios()
         {
             using (HttpClient client = new HttpClient())
@@ -54,7 +47,12 @@ namespace Pasteleria.Models.Modelos
                 {
                     //Deserialización System.Net.Http.Formatting.Extension
                     return respuesta.Content.ReadAsAsync<List<SelectListItem>>().Result;
-=======
+                }
+                return null;
+            }
+        }
+
+
         public UsuarioObj ValidarUsuario(UsuarioObj usuario) {
             using (HttpClient client = new HttpClient()) {
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/ValidarUsuario";
@@ -76,7 +74,6 @@ namespace Pasteleria.Models.Modelos
                     //Deserialización System.Net.Http.Formatting.Extension
                     //return respuesta.Content.ReadAsAsync<RespuestaUsuario>().Result;
                     return usuario;
->>>>>>> dba9cbc2e01bcef9b503c4bf8fa892c39f269a52
                 }
                 return null;
             }
