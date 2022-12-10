@@ -170,13 +170,16 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CorreoController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Modelos\CorreoModel.cs" />
     <Compile Include="Models\Modelos\TipoUsuarioModel.cs" />
     <Compile Include="Models\Modelos\UsuarioModel.cs" />
+    <Compile Include="Models\Objetos\CorreoObj.cs" />
     <Compile Include="Models\Objetos\FiltroSesiones.cs" />
     <Compile Include="Models\Objetos\UsuarioObj.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -988,6 +991,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Views\Correo\CodigoCorreo.cshtml" />
+    <Content Include="Views\Correo\CambiaContrasena.cshtml" />
     <None Include="Views\Home\Index.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -1005,6 +1010,7 @@
     <Content Include="Views\Usuario\UsuariosConsulta.cshtml" />
     <Content Include="Views\Usuario\UsuariosRegistrar.cshtml" />
     <Content Include="Views\Usuario\UsuariosActualizar.cshtml" />
+    <Content Include="Views\Correo\RecuperarCorreo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

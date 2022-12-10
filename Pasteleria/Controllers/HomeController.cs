@@ -36,7 +36,7 @@ namespace Pasteleria.Controllers
         [HttpGet]
         public ActionResult Principal()
         {
-            
+            return RedirectToAction("UsuariosConsulta", "Usuario");
             return View();
         }
 
