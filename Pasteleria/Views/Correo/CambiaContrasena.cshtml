@@ -18,6 +18,8 @@
     <link href="~/assets/css/plugins.css" rel="stylesheet" type="text/css" />
     <link href="~/assets/css/structure.css" rel="stylesheet" type="text/css" class="structure" />
     <link href="~/assets/css/authentication/form-1.css" rel="stylesheet" type="text/css" />
+    <link href="~/plugins/sweetalerts/sweetalert2.min.css" rel="stylesheet" />
+    <link href="~/plugins/sweetalerts/sweetalert.css" rel="stylesheet" />
     <!-- END GLOBAL MANDATORY STYLES -->
     <link rel="stylesheet" type="text/css" href="~/assets/css/forms/theme-checkbox-radio.css">
     <link rel="stylesheet" type="text/css" href="~/assets/css/forms/switches.css">
@@ -69,7 +71,7 @@
                                     {
                                         @class = "form-control",
                                         @placeholder = "Codigo",
-                                        @type = "text"
+                                        @type = "hidden"
                                         })
 
                                     <div class="d-sm-flex justify-content-between">
@@ -95,6 +97,8 @@
     <script src="~/assets/js/libs/jquery-3.1.1.min.js"></script>
     <script src="~/bootstrap/js/popper.min.js"></script>
     <script src="~/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/plugins/sweetalerts/sweetalert2.min.js"></script>
+    <script src="~/plugins/sweetalerts/sweetalert.js"></script>
 
     <!-- END GLOBAL MANDATORY SCRIPTS -->
     <script src="~/assets/js/authentication/form-1.js"></script>
@@ -112,7 +116,13 @@
 
             } else {
                 document.getElementById("btn-enviar").disabled = true;
-                alert("Contraseña no coincide");
+                Swal.fire({
+                    position: 'top-end',
+                    title: 'Atencion',
+                    text: 'Contraseñas no coinciden',
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                });
             }
         }
     </script>
