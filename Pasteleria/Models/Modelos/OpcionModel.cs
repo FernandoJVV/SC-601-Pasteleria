@@ -30,5 +30,69 @@ namespace Pasteleria.Models.Modelos
             }
 
         }
+
+        public List<OpcionObj> OpcionActualizar()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Opcion/Lista";
+                //string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+
+                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    //Deserialización System.Net.Http.Formatting.Extension
+                    return respuesta.Content.ReadAsAsync<List<OpcionObj>>().Result;
+                }
+                return null;
+            }
+
+        }
+
+
+
+        public List<OpcionObj> OpcionRegistrar()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Opcion/Lista";
+                //string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+
+                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    //Deserialización System.Net.Http.Formatting.Extension
+                    return respuesta.Content.ReadAsAsync<List<OpcionObj>>().Result;
+                }
+                return null;
+            }
+
+        }
+
+        public List<CategoriaObj> GetCategorias()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Opcion/getCategorias";
+                //string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+
+                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    //Deserialización System.Net.Http.Formatting.Extension
+                    return respuesta.Content.ReadAsAsync<List<CategoriaObj>>().Result;
+                }
+                return null;
+            }
+
+        }
+
+
     }
 }

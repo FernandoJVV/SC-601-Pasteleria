@@ -964,6 +964,8 @@
     <Content Include="Views\Usuario\UsuariosRegistrar.cshtml" />
     <Content Include="Views\Usuario\UsuariosActualizar.cshtml" />
     <Content Include="Views\Opcion\OpcionesLista.cshtml" />
+    <Content Include="Views\Opcion\RegistroOpcion.cshtml" />
+    <Content Include="Views\Opcion\EditaOpcion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

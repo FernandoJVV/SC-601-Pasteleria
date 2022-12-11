@@ -11,7 +11,7 @@
             <img src="https://cdn-icons-png.flaticon.com/512/1165/1165674.png" width="55" height="55" class="d-inline-block align-top" alt="">
             <h1 class="d-inline text-center"> Mantenimiento de Opciones</h1>
         </a>
-        @Html.ActionLink("Agregar nueva opcion", "Create", null, new { @class = "btn btn-dark pull-right mr-3" })
+        @Html.ActionLink("Agregar nueva opcion", "RegistroOpcion", null, new { @class = "btn btn-dark pull-right mr-3" })
 
     </nav>
 
@@ -58,7 +58,7 @@
                                     @Html.DisplayFor(modelItem => item.Estado)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Editar", "EditarOpcion", new { id = item.OpcionId }, new { @class = "btn btn-dark" }) |
+                                    @Html.ActionLink("Editar", "EditaOpcion", new { id = item.OpcionId }, new { @class = "btn btn-dark" }) |
                                     @Html.ActionLink("Eliminar", "EliminarOpcion", new { id = item.OpcionId }, new { @class = "btn btn-danger" })
                                 </td>
                             </tr>
@@ -73,7 +73,7 @@
 <script>
     
     $('#opciones tr').each(function () {
-        const categorias = ["Tamaño", "Sabor", "Cantidad de Niveles"];
+        const categorias = ["Sabor", "Color externo", "Decoracion", "Forma", "Niveles"];
         $(this).find('td:nth-child(2)').each(function () {
             $value = $(this).text();
             $(this).text(categorias[$value-1]);

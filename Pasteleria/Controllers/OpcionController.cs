@@ -19,5 +19,32 @@ namespace Pasteleria.Controllers
             else
                 return View("Error");
         }
+
+        public ActionResult RegistroOpcion()
+        {
+            var resultado = model.GetCategorias();
+
+            if (resultado != null)
+            {
+                var categorias = new List<SelectListItem>();
+
+                foreach (var item in resultado)
+                    categorias.Add(new SelectListItem { Text = item.Descripcion, Value = item.CatId.ToString() });
+
+                ViewBag.ComboCategorias = categorias;
+                return View();
+            }
+            else
+                return View("Error");
+        }
+
+        public ActionResult EditarOpcion(int id) 
+        {
+            return View(); 
+        }
+
+
     }
+
+
 }
