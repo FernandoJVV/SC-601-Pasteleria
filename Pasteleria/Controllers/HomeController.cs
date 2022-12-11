@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml.Linq;
 
 namespace Pasteleria.Controllers
 {
@@ -21,6 +22,12 @@ namespace Pasteleria.Controllers
         {
             Session.Clear();
             Session.Abandon();
+
+            if (TempData.ContainsKey("mensaje"))
+            {
+                ViewBag.MsjInicio = TempData["mensaje"].ToString();
+            }; 
+
             return View();
         }
 
@@ -36,7 +43,7 @@ namespace Pasteleria.Controllers
         [HttpGet]
         public ActionResult Principal()
         {
-            return RedirectToAction("UsuariosConsulta", "Usuario");
+
             return View();
         }
 
