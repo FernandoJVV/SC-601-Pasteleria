@@ -7,6 +7,16 @@
     <link href="~/assets/css/users/account-setting.css" rel="stylesheet" type="text/css" />
 }
 
+@{ 
+    var listaOpciones = ViewBag.Opciones as List<Pasteleria.Models.Objetos.OpcionObj>;
+    var niveles = (from x in listaOpciones where x.NombreCategoria.Equals("Niveles") select x.Descripcion).FirstOrDefault();
+    var sabor = (from x in listaOpciones where x.NombreCategoria.Equals("Sabor") select x.Descripcion).FirstOrDefault();
+    var color = (from x in listaOpciones where x.NombreCategoria.Equals("Color externo") select x.Descripcion).FirstOrDefault();
+    var decoracion = (from x in listaOpciones where x.NombreCategoria.Equals("Decoración") select x.Descripcion).FirstOrDefault();
+    var forma = (from x in listaOpciones where x.NombreCategoria.Equals("Forma") select x.Descripcion).FirstOrDefault();
+
+}
+
 <div class="page-header">
     <div class="page-title">
         <h3>Detalles de la cotización</h3>
@@ -66,32 +76,31 @@
                                                         <div class="col-sm-3">
                                                             <div class="form-group">
                                                                 <label for="sabor">Cantidad de niveles</label>
-                                                                @Html.EditorFor(model => model.COT_USU_MAIL, new { htmlAttributes = new { @class = "form-control", @disabled = true } })
+                                                                <input disabled class="form-control" type="number" name="name" value="@niveles" />
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <div class="form-group">
                                                                 <label for="sabor">Sabor</label>
-                                                                @Html.EditorFor(model => model.COT_USU_MAIL, new { htmlAttributes = new { @class = "form-control", @disabled = true } })
+                                                                <input disabled class="form-control" type="text" name="name" value="@sabor" />
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <label for="sabor">Decoración</label>
-                                                            @Html.EditorFor(model => model.COT_USU_MAIL, new { htmlAttributes = new { @class = "form-control", @disabled = true } })
-
+                                                            <input disabled class="form-control" type="text" name="name" value="@decoracion" />
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-sm-3">
                                                             <div class="form-group">
                                                                 <label for="sabor">Forma</label>
-                                                                @Html.EditorFor(model => model.COT_USU_MAIL, new { htmlAttributes = new { @class = "form-control", @disabled = true } })
+                                                                <input disabled class="form-control" type="text" name="name" value="@forma" />
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <div class="form-group">
                                                                 <label for="sabor">Color externo</label>
-                                                                @Html.EditorFor(model => model.COT_USU_MAIL, new { htmlAttributes = new { @class = "form-control", @disabled = true } })
+                                                                <input disabled class="form-control" type="text" name="name" value="@color" />
                                                             </div>
                                                         </div>
                                                     </div>

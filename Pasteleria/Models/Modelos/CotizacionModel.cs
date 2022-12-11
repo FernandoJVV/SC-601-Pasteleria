@@ -94,5 +94,18 @@ namespace Pasteleria.Models.Modelos
             }
             return false;
         }
+
+        public List<OpcionObj> ObtenerOpcionesCotizacion(int id) {
+            using (HttpClient client = new HttpClient()) {
+                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Cotizaciones/OpcionCotizacion?id="+id;
+
+                HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
+
+                if (respuesta.IsSuccessStatusCode) {
+                    return respuesta.Content.ReadAsAsync<List<OpcionObj>>().Result;
+                }
+            }
+            return null;
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Pasteleria.Models.Modelos;
+using Pasteleria.Models.Objetos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +29,13 @@ namespace Pasteleria.Controllers
             try {
                 var cotizacion = _cotizacionModel.ObtenerCotizacion(id);
                 var opciones = new List<SelectListItem>();
+                var opcionesCotizacion = new List<OpcionObj>();
                 foreach (var item in _cotizacionModel.ObtenerEstados())
                     opciones.Add(new SelectListItem { Text = item.Descripcion, Value = item.Id.ToString() });
 
+                opcionesCotizacion = _cotizacionModel.ObtenerOpcionesCotizacion(id);
+
+                ViewBag.Opciones = opcionesCotizacion;
                 ViewBag.ComboEstados = opciones;
                 return View(cotizacion);
             }
