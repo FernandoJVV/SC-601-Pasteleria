@@ -40,8 +40,6 @@ namespace Pasteleria.Models.Modelos
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Opcion/ConsultaOpcion?id="+id;
                 //string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
-                //Serializacion
-
                 //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
 
