@@ -4,6 +4,12 @@
     ViewBag.Title = "Mantenimiento de Opciones para Pasteles";
 }
 
+@section pageCSS{
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link rel="stylesheet" type="text/css" href="~/plugins/table/datatable/datatables.css">
+    <link rel="stylesheet" type="text/css" href="~/plugins/table/datatable/dt-global_style.css">
+}
+
 <div class="jumbotron">
     <!--Encabezado-->
     <nav class="navbar navbar-light bg-light">
@@ -18,7 +24,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="table-responsive-md">
-                <table id="opciones" class="table table-hover table-bordered table-striped mt-3">
+                <table id="opcionesTable" class="table table-hover table-bordered table-striped mt-3">
                     <thead class="thead-dark">
                         <tr>
                             <th>
@@ -69,14 +75,29 @@
         </div>
     </div>
 </div>
-<script src="~/assets/js/libs/jquery-3.1.1.min.js"></script>
-<script>
-    
-    $('#opciones tr').each(function () {
-        const categorias = ["Sabor", "Color externo", "Decoracion", "Forma", "Niveles"];
-        $(this).find('td:nth-child(2)').each(function () {
-            $value = $(this).text();
-            $(this).text(categorias[$value-1]);
+
+@section scripts{
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="~/assets/js/libs/jquery-3.1.1.min.js"></script>
+    <script src="~/plugins/table/datatable/datatables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#opcionesTable').DataTable({
+            });
+        });
+    </script>
+
+    <script>
+
+        $('#opciones tr').each(function () {
+            const categorias = ["Sabor", "Color externo", "Decoracion", "Forma", "Niveles"];
+            $(this).find('td:nth-child(2)').each(function () {
+                $value = $(this).text();
+                $(this).text(categorias[$value - 1]);
+            })
         })
-    })
-</script>
+    </script>
+}
+
+
+
