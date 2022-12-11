@@ -1,0 +1,180 @@
+﻿@model Pasteleria.Models.Objetos.CotizacionObj
+@{
+    ViewBag.Title = "Detalles";
+}
+
+@section pageCSS{
+    <link href="~/assets/css/users/account-setting.css" rel="stylesheet" type="text/css" />
+}
+
+<div class="page-header">
+    <div class="page-title">
+        <h3>Detalles de la cotización</h3>
+    </div>
+</div>
+
+<div class="account-settings-container layout-top-spacing">
+
+    <div class="account-content">
+        <div class="scrollspy-example" data-spy="scroll" data-target="#account-settings-scroll" data-offset="-100">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+                    @using (Html.BeginForm("Editar", "Cotizaciones", FormMethod.Post)) {
+                        @Html.AntiForgeryToken()
+                        <div class="section general-info">
+                            <div class="info">
+                                <h6 class="">Información general</h6>
+                                <div class="row">
+                                    <div class="col-lg-11 mx-auto">
+                                        <div class="row">
+                                            <div class="col-xl-10 col-lg-12 col-md-8 mt-md-0 mt-4">
+                                                <div class="form">
+                                                    <div class="row">
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                                <label for="usuariolbl">Usuario</label>
+                                                                @Html.HiddenFor(model => model.COT_ID)
+                                                                @Html.EditorFor(model => model.COT_USU_MAIL, new { htmlAttributes = new { @class = "form-control", @disabled = true } })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                                <label for="usuariolbl">Precio estimado</label>
+                                                                @Html.EditorFor(model => model.COT_ESTIMADO, new { htmlAttributes = new { @class = "form-control" }, @required = true })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <label for="usuariolbl">Estado</label>
+                                                            @Html.DropDownListFor(model => model.COT_EST_DESC, ViewBag.ComboEstados as List<SelectListItem>, new { @class = "form-control", @required = true })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="info">
+                                <h6 class="">Opciones seleccionadas</h6>
+                                <div class="row">
+                                    <div class="col-lg-11 mx-auto">
+                                        <div class="row">
+                                            <div class="col-xl-10 col-lg-12 col-md-8 mt-md-0 mt-4">
+                                                <div class="form">
+                                                    <div class="row">
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                                <label for="sabor">Cantidad de niveles</label>
+                                                                @Html.EditorFor(model => model.COT_USU_MAIL, new { htmlAttributes = new { @class = "form-control", @disabled = true } })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                                <label for="sabor">Sabor</label>
+                                                                @Html.EditorFor(model => model.COT_USU_MAIL, new { htmlAttributes = new { @class = "form-control", @disabled = true } })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <label for="sabor">Decoración</label>
+                                                            @Html.EditorFor(model => model.COT_USU_MAIL, new { htmlAttributes = new { @class = "form-control", @disabled = true } })
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                                <label for="sabor">Forma</label>
+                                                                @Html.EditorFor(model => model.COT_USU_MAIL, new { htmlAttributes = new { @class = "form-control", @disabled = true } })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                                <label for="sabor">Color externo</label>
+                                                                @Html.EditorFor(model => model.COT_USU_MAIL, new { htmlAttributes = new { @class = "form-control", @disabled = true } })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-3 offset-md-11">
+                                                <input class="btn btn-primary" type="submit" name="btnSubmit" value="Guardar" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+                    <form id="about" class="section about">
+                        <div class="info">
+                            <h5 class="">Comentarios</h5>
+                            <div class="row">
+                                <div class="col-md-11 mx-auto">
+                                    <div class="form-group">
+                                        <label for="aboutBio">Bio</label>
+                                        <textarea class="form-control" id="aboutBio" placeholder="Tell something interesting about yourself" rows="10">I'm Creative Director and UI/UX Designer from Sydney, Australia, working in web development and print media. I enjoy turning complex problems into simple, beautiful and intuitive designs.
+
+My job is to build your website so that it is functional and user-friendly but at the same time attractive. Moreover, I add personal touch to your product and make sure that is eye-catching and easy to use. My aim is to bring across your message and identity in the most creative way. I created web design for many famous brand companies.</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+                    <form id="work-platforms" class="section work-platforms">
+                        <div class="info">
+                            <h5 class="">Work Platforms</h5>
+                            <div class="row">
+                                <div class="col-md-12 text-right mb-5">
+                                    <button id="add-work-platforms" class="btn btn-primary">Add</button>
+                                </div>
+                                <div class="col-md-11 mx-auto">
+
+                                    <div class="platform-div">
+                                        <div class="form-group">
+                                            <label for="platform-title">Platforms Title</label>
+                                            <input type="text" class="form-control mb-4" id="platform-title" placeholder="Platforms Title" value="Web Design">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="platform-description">Description</label>
+                                            <textarea class="form-control mb-4" id="platform-description" placeholder="Platforms Description" rows="10">Duis aute irure dolor in reprehenderit in voluptate velit esse eu fugiat nulla pariatur.</textarea>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#COT_EST_DESC option").each(function () {
+                if ($(this).text() == '@Model.COT_EST_DESC') {
+                    $(this).attr('selected', 'selected');
+                }
+            });
+        });
+    </script>
+}

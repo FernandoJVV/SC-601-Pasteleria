@@ -170,15 +170,19 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CotizacionesController.cs" />
     <Compile Include="Controllers\OpcionController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Modelos\CotizacionModel.cs" />
+    <Compile Include="Models\Objetos\EstadoObj.cs" />
     <Compile Include="Models\Modelos\OpcionModel.cs" />
     <Compile Include="Models\Modelos\TipoUsuarioModel.cs" />
     <Compile Include="Models\Modelos\UsuarioModel.cs" />
+    <Compile Include="Models\Objetos\CotizacionObj.cs" />
     <Compile Include="Models\Objetos\OpcionObj.cs" />
     <Compile Include="Models\Objetos\FiltroSesiones.cs" />
     <Compile Include="Models\Objetos\UsuarioObj.cs" />
@@ -991,6 +995,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Views\Cotizaciones\Index.cshtml" />
+    <Content Include="Views\Cotizaciones\Detalles.cshtml" />
     <None Include="Views\Home\Index.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
