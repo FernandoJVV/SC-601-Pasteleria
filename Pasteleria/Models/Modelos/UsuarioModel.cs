@@ -174,26 +174,24 @@ namespace Pasteleria.Models.Modelos
                 return null;
             }
         }
-    }
+        public bool NuevoRegistro(UsuarioObj usuario) {
+            using (HttpClient client = new HttpClient()) {
+                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/NuevoRegistro";
 
-    public bool NuevoRegistro(UsuarioObj usuario) {
-        using (HttpClient client = new HttpClient()) {
-            string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/NuevoRegistro";
+                //Serialización System.Net.Http.Json;
+                JsonContent contenido = JsonContent.Create(usuario);
 
-            //Serialización System.Net.Http.Json;
-            JsonContent contenido = JsonContent.Create(usuario);
-
-            HttpResponseMessage respuesta = client.PostAsync(rutaApi, contenido).Result;
-            if (respuesta.IsSuccessStatusCode) {
-                var textoRespuesta = respuesta.Content.ReadAsAsync<string>().Result;
-                if (textoRespuesta == null) {
-                    return false;
+                HttpResponseMessage respuesta = client.PostAsync(rutaApi, contenido).Result;
+                if (respuesta.IsSuccessStatusCode) {
+                    var textoRespuesta = respuesta.Content.ReadAsAsync<string>().Result;
+                    if (textoRespuesta == null) {
+                        return false;
+                    }
                 }
+                return true;
             }
-            return true;
         }
     }
-}
 
-
+   
 }

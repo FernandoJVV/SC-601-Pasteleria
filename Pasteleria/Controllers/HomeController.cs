@@ -31,12 +31,6 @@ namespace Pasteleria.Controllers
             return View();
         }
 
-        [FiltroSesiones]
-        public ActionResult Principal()
-        {
-            return View();
-        }
-
         public ActionResult Registrar() {
             return View();
         }
