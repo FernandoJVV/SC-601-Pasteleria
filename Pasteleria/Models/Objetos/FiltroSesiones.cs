@@ -11,25 +11,34 @@ namespace Pasteleria.Models.Objetos
     {
         private bool allowUser;
 
-        public FiltroSesiones(string permitir) {
-            if (permitir == "Usuario") {
+        public FiltroSesiones(string permitir)
+        {
+            if (permitir == "Usuario")
+            {
                 this.allowUser = true;
             }
         }
-        public FiltroSesiones() {
+        public FiltroSesiones()
+        {
             this.allowUser = false;
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (filterContext.HttpContext.Session["CodigoSeguridad"] == null || filterContext.HttpContext.Session["RolUsuario"] == null)
+            var rolNulo = filterContext.HttpContext.Session["RolUsuario"] == null;
+
+            if (filterContext.HttpContext.Session["CodigoSeguridad"] == null || rolNulo)
             {
                 filterContext.Result = cambiarRuta();
+
             }
-            if (filterContext.RouteData.Values["controller"].ToString() != "Home") {
+
+            if (!rolNulo)
+            {
                 var rol = filterContext.HttpContext.Session["RolUsuario"].ToString();
 
-                if (rol == "Usuario" && !allowUser) {
+                if (rol == "Usuario" && !allowUser)
+                {
                     filterContext.Result = cambiarRuta();
                 }
             }
@@ -37,7 +46,8 @@ namespace Pasteleria.Models.Objetos
             base.OnActionExecuting(filterContext);
         }
 
-        private RedirectToRouteResult cambiarRuta() {
+        private RedirectToRouteResult cambiarRuta()
+        {
             return new RedirectToRouteResult(new RouteValueDictionary
                 {
                     { "controller", "Home" },
