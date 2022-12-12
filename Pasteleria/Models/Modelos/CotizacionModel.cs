@@ -15,7 +15,9 @@ namespace Pasteleria.Models.Modelos
         public List<CotizacionObj> ObtenerCotizaciones() {
             using (HttpClient client = new HttpClient()) {
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Cotizaciones/ListaCotizaciones";
+                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
 
                 if (respuesta.IsSuccessStatusCode) {
@@ -28,7 +30,9 @@ namespace Pasteleria.Models.Modelos
         public CotizacionObj ObtenerCotizacion(int id) {
             using (HttpClient client = new HttpClient()) {
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Cotizaciones/GetCotizacion?id="+id;
+                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
 
                 if (respuesta.IsSuccessStatusCode) {
@@ -41,7 +45,9 @@ namespace Pasteleria.Models.Modelos
         public List<EstadoObj> ObtenerEstados() {
             using (HttpClient client = new HttpClient()) {
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Cotizaciones/ListarEstados";
+                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
 
                 if (respuesta.IsSuccessStatusCode) {
@@ -69,6 +75,9 @@ namespace Pasteleria.Models.Modelos
                 };
                 //Serialización System.Net.Http.Json;
                 JsonContent contenido = JsonContent.Create(cot);
+                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage respuesta = client.PutAsync(rutaApi, contenido).Result;
 
                 if (respuesta.IsSuccessStatusCode) {
@@ -87,6 +96,9 @@ namespace Pasteleria.Models.Modelos
                 };
                 //Serialización System.Net.Http.Json;
                 JsonContent contenido = JsonContent.Create(cot);
+                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage respuesta = client.PutAsync(rutaApi,contenido).Result;
 
                 if (respuesta.IsSuccessStatusCode) {
@@ -99,7 +111,9 @@ namespace Pasteleria.Models.Modelos
         public List<OpcionObj> ObtenerOpcionesCotizacion(int id) {
             using (HttpClient client = new HttpClient()) {
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Cotizaciones/OpcionCotizacion?id="+id;
+                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
 
                 if (respuesta.IsSuccessStatusCode) {
@@ -129,6 +143,9 @@ namespace Pasteleria.Models.Modelos
 
             using (HttpClient client = new HttpClient()) {
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Cotizaciones/CotizacionesPorUsuario?idUsuario="+ idUsuario;
+                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
 
