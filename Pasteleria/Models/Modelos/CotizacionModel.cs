@@ -258,18 +258,25 @@ namespace Pasteleria.Models.Modelos
 
 
 
-                HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
-                if (respuesta.IsSuccessStatusCode) {
-                    return respuesta.Content.ReadAsAsync<int>().Result;
-                }
-                else {
-                    return 0;
+                    HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
+                    if (respuesta.IsSuccessStatusCode) {
+                        return respuesta.Content.ReadAsAsync<int>().Result;
+                    }
+                    else {
+                        return 0;
+                    }
                 }
             }
+            catch (Exception)
+            {
+                Exception ex = new Exception("Error al obtener id de usuario.");
+                return 0;
+            }
         }
-
-        public bool AgregarOpcionCotizacion(DTOOpcionXCotizacionObj dtoOpcion) {
-            using (HttpClient client = new HttpClient()) {
+        public bool AgregarOpcionCotizacion(DTOOpcionXCotizacionObj dtoOpcion)
+        {
+            using (HttpClient client = new HttpClient())
+            {
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Cotizaciones/RegistroOpcionXCotizacion";
 
                 string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
@@ -278,17 +285,20 @@ namespace Pasteleria.Models.Modelos
 
                 HttpResponseMessage respuesta = client.PostAsync(rutaApi, content).Result;
 
-                if (respuesta.IsSuccessStatusCode) {
+                if (respuesta.IsSuccessStatusCode)
+                {
                     return true;
                 }
-                else {
+                else
+                {
                     return false;
                 }
             }
         }
+
+
     }
 
 
-    }//class
+ }
 
-}
