@@ -91,7 +91,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success">Cotizar</button>
+                    <button type="button" class="btn btn-success" onclick="CrearCotizacion()">Cotizar</button>
                 </div>
             </div>
         </div>
@@ -116,5 +116,16 @@
                 "pageLength": 7
             });
         });
+
+        function CrearCotizacion() {
+            $.ajax({
+                url: "@Url.Action("CrearCotizacion", "Cotizaciones")",
+                data: data,
+                success: function (data) {
+                    console.log(data);
+                },
+                dataType: dataType
+            });
+        }
     </script>
 }

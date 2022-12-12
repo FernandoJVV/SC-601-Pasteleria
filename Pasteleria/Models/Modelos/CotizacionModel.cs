@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Web;
+using System.Web.Helpers;
 
 namespace Pasteleria.Models.Modelos
 {
@@ -29,7 +30,7 @@ namespace Pasteleria.Models.Modelos
         }
         public CotizacionObj ObtenerCotizacion(int id) {
             using (HttpClient client = new HttpClient()) {
-                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Cotizaciones/GetCotizacion?id="+id;
+                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Cotizaciones/GetCotizacion?id=" + id;
                 string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -58,7 +59,7 @@ namespace Pasteleria.Models.Modelos
         }
 
         public bool ActualizarCotizacion(int COT_ID, decimal cOT_ESTIMADO, int cOT_EST_DESC) {
-            if(!ActualizarMonto(COT_ID, cOT_ESTIMADO)) 
+            if (!ActualizarMonto(COT_ID, cOT_ESTIMADO))
                 return false;
             if (!ActualizarEstado(COT_ID, cOT_EST_DESC))
                 return false;
@@ -99,7 +100,7 @@ namespace Pasteleria.Models.Modelos
                 string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                HttpResponseMessage respuesta = client.PutAsync(rutaApi,contenido).Result;
+                HttpResponseMessage respuesta = client.PutAsync(rutaApi, contenido).Result;
 
                 if (respuesta.IsSuccessStatusCode) {
                     return true;
@@ -110,7 +111,7 @@ namespace Pasteleria.Models.Modelos
 
         public List<OpcionObj> ObtenerOpcionesCotizacion(int id) {
             using (HttpClient client = new HttpClient()) {
-                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Cotizaciones/OpcionCotizacion?id="+id;
+                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Cotizaciones/OpcionCotizacion?id=" + id;
                 string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -124,25 +125,10 @@ namespace Pasteleria.Models.Modelos
         }
 
         public List<CotizacionObj> ListarCotizacionUsuario(string email) {
-            var idUsuario = 0;
+            var idUsuario = GetUserId(email);
 
             using (HttpClient client = new HttpClient()) {
-                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Usuario/ObtenerId?email="+ email;
-
-                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
-
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
-                if (respuesta.IsSuccessStatusCode) {
-                    idUsuario = respuesta.Content.ReadAsAsync<int>().Result;
-                }
-                else {
-                    return null;
-                }
-            }
-
-            using (HttpClient client = new HttpClient()) {
-                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Cotizaciones/CotizacionesPorUsuario?idUsuario="+ idUsuario;
+                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Cotizaciones/CotizacionesPorUsuario?idUsuario=" + idUsuario;
                 string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -155,5 +141,46 @@ namespace Pasteleria.Models.Modelos
                 return null;
             }
         }
+
+        public int CrearCotizacion(DTOCotizacion dtoCot, string email) {
+            var idUsuario = GetUserId(email);
+
+            dtoCot.COT_USU_ID = idUsuario;
+
+            using (HttpClient client = new HttpClient()) {
+                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/api/Cotizaciones/RegistrarCotizaciones";
+                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                JsonContent content = JsonContent.Create(dtoCot);
+
+                HttpResponseMessage respuesta = client.PostAsync(rutaApi, content).Result;
+
+                if (respuesta.IsSuccessStatusCode) {
+                    return respuesta.Content.ReadAsAsync<int>().Result;
+                }
+                return 0;
+            }
+        }
+
+        private int GetUserId(string email) {
+            using (HttpClient client = new HttpClient()) {
+                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Usuario/ObtenerId?email=" + email;
+
+                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+
+
+                HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
+                if (respuesta.IsSuccessStatusCode) {
+                    return respuesta.Content.ReadAsAsync<int>().Result;
+                }
+                else {
+                    return 0;
+                }
+            }
+        }
     }
+
 }

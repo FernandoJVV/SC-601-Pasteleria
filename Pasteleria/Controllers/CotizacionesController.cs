@@ -147,5 +147,21 @@ namespace Pasteleria.Controllers
                 return View();
             }
         }
+
+        [FiltroSesiones("Usuario")]
+        public int CrearCotizacion() {
+            try {
+                var email = Session["CorreoUsuario"].ToString();
+                DTOCotizacion dtoCot = new DTOCotizacion ();
+                dtoCot.COT_ESTIMADO = 0;
+                dtoCot.COT_USU_ID = 0;
+                dtoCot.COT_EST_ID = 1;
+                int idCotizacion = _cotizacionModel.CrearCotizacion(dtoCot,email);
+                return idCotizacion;
+            }
+            catch (Exception) {
+                return 0;
+            }
+        }
     }
 }
