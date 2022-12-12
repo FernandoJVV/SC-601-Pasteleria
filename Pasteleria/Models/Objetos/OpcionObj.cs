@@ -15,4 +15,12 @@ namespace Pasteleria.Models.Objetos
         public bool Estado { get; set; }
 
     }
+
+    public class CategoriaObj
+    {
+        public int CatId { get; set; }
+        public string Descripcion { get; set; }
+
+    }
+
 }

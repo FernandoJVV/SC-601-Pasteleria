@@ -4,21 +4,27 @@
     ViewBag.Title = "Mantenimiento de Opciones para Pasteles";
 }
 
+@section pageCSS{
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link rel="stylesheet" type="text/css" href="~/plugins/table/datatable/datatables.css">
+    <link rel="stylesheet" type="text/css" href="~/plugins/table/datatable/dt-global_style.css">
+}
+
 <div class="jumbotron">
     <!--Encabezado-->
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="#">
-            <img src="https://cdn-icons-png.flaticon.com/512/1165/1165674.png" width="55" height="55" class="d-inline-block align-top" alt="">
+            <img src="https://cdn-icons-png.flaticon.com/512/3081/3081996.png" width="55" height="55" class="d-inline-block align-top" alt="">
             <h1 class="d-inline text-center"> Mantenimiento de Opciones</h1>
         </a>
-        @Html.ActionLink("Agregar nueva opcion", "Create", null, new { @class = "btn btn-dark pull-right mr-3" })
+        @Html.ActionLink("Agregar nueva opcion", "RegistroOpcion", null, new { @class = "btn btn-dark pull-right mr-3" })
 
     </nav>
 
     <div class="row">
         <div class="col-md-12">
             <div class="table-responsive-md">
-                <table class="table table-hover table-bordered table-striped mt-3">
+                <table id="opcionesTable" class="table table-hover table-bordered table-striped mt-3">
                     <thead class="thead-dark">
                         <tr>
                             <th>
@@ -38,7 +44,8 @@
                             </th>
                             <th>Acciones</th>
                         </tr>
-
+                    </thead>
+                    <tbody>
                         @foreach (var item in Model)
                         {
                             <tr>
@@ -58,14 +65,109 @@
                                     @Html.DisplayFor(modelItem => item.Estado)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Editar", "EditarOpcion", new { id = item.OpcionId }, new { @class = "btn btn-dark" }) |
-                                    @Html.ActionLink("Eliminar", "EliminarOpcion", new { id = item.OpcionId }, new { @class = "btn btn-danger" })
+                                    @Html.ActionLink("Editar", "EditaOpcion", new { id = item.OpcionId }, new { @class = "btn btn-dark" }) |
+                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#eliminarModal" data-book-id="@item.OpcionId">
+                                        Eliminar
+                                    </button>
                                 </td>
                             </tr>
                         }
+                    </tbody>
+
 
                 </table>
             </div>
         </div>
     </div>
 </div>
+
+@section scripts{
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="~/plugins/table/datatable/datatables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#opcionesTable').DataTable({
+                "oLanguage": {
+                    "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+                    "sInfo": "Mostrando página _PAGE_ de _PAGES_",
+                    "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                    "sSearchPlaceholder": "Buscar...",
+                    "sLengthMenu": "Resultados :  _MENU_",
+                },
+                "stripeClasses": [],
+                "lengthMenu": [7, 10, 20, 50],
+                "pageLength": 7
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#eliminarModal').on('show.bs.modal', function (e) {
+                var id = $(e.relatedTarget).data('book-id');
+                $("#id").val(id);
+            });
+        });
+
+        function EliminarOpcion() {
+
+            $.ajax({
+                type: 'DELETE',
+                url: '/Opcion/EliminarOpcion',
+                data: {
+                    "id": $("#id").val()
+                },
+                dataType: 'text',
+                success: function (data) {
+                    window.location.href = "/configuraciones"
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(textStatus)
+                }
+            });
+
+        }
+    </script>
+
+
+
+    <script>
+
+        $('#opcionesTable tr').each(function () {
+            const categorias = ["Sabor", "Color externo", "Decoracion", "Forma", "Niveles"];
+            $(this).find('td:nth-child(2)').each(function () {
+                $value = $(this).text();
+                $(this).text(categorias[$value - 1]);
+            })
+        })
+    </script>
+}
+
+@section modals
+{
+    <div class="modal fade" id="eliminarModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Cambiar Estado</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <p>Está seguro de eliminar la opcion seleccionada?</p>
+
+                    @Html.Hidden("id", "")
+
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-danger" value="Eliminar" onclick="EliminarOpcion();" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
