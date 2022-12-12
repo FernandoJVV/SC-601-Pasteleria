@@ -12,6 +12,7 @@ namespace Pasteleria.Controllers
     {
         OpcionModel model = new OpcionModel();
         // GET: Opcion
+        [FiltroSesiones]
         public ActionResult OpcionesLista()
         {
             var resultado = model.OpcionesLista();
@@ -21,6 +22,7 @@ namespace Pasteleria.Controllers
                 return View("Error");
         }
 
+        [FiltroSesiones]
         [HttpGet]
         public ActionResult RegistroOpcion()
         {
@@ -40,7 +42,7 @@ namespace Pasteleria.Controllers
                 return View("Error");
         }
 
-
+        [FiltroSesiones]
         [HttpPost]
         public ActionResult RegistroOpcion(OpcionObj obj)
         {
@@ -52,6 +54,7 @@ namespace Pasteleria.Controllers
                 return View("Error");
         }
 
+        [FiltroSesiones]
         [HttpGet]
         public ActionResult EditaOpcion(int id)
         {
@@ -79,7 +82,7 @@ namespace Pasteleria.Controllers
                 return View("Error");
         }
 
-
+        [FiltroSesiones]
         [HttpPost]
         public ActionResult EditaOpcion(OpcionObj obj)
         {
@@ -91,6 +94,7 @@ namespace Pasteleria.Controllers
                 return View("Error");
         }
 
+        [FiltroSesiones]
         [HttpDelete]
         public string EliminarOpcion(int id)
         {

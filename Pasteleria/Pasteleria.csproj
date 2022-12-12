@@ -277,6 +277,7 @@
     <Content Include="assets\img\fr.png" />
     <Content Include="assets\img\jp.png" />
     <Content Include="assets\img\mindset.svg" />
+    <Content Include="assets\img\user.png" />
     <Content Include="assets\js\app.js" />
     <Content Include="assets\js\apps\contact.js" />
     <Content Include="assets\js\apps\custom-mailbox.js" />
@@ -1005,6 +1006,7 @@
     <Content Include="Views\Correo\CambiaContrasena.cshtml" />
     <Content Include="Views\Cotizaciones\Index.cshtml" />
     <Content Include="Views\Cotizaciones\Detalles.cshtml" />
+    <Content Include="Views\Cotizaciones\Listar.cshtml" />
     <None Include="Views\Home\Index.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

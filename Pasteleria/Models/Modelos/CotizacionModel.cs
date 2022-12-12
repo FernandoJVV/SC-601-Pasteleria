@@ -107,5 +107,33 @@ namespace Pasteleria.Models.Modelos
             }
             return null;
         }
+
+        public List<CotizacionObj> ListarCotizacionUsuario(string email) {
+            var idUsuario = 0;
+
+            using (HttpClient client = new HttpClient()) {
+                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Usuario/ObtenerId?email="+ email;
+
+                HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
+
+                if (respuesta.IsSuccessStatusCode) {
+                    idUsuario = respuesta.Content.ReadAsAsync<int>().Result;
+                }
+                else {
+                    return null;
+                }
+            }
+
+            using (HttpClient client = new HttpClient()) {
+                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Cotizaciones/CotizacionesPorUsuario?idUsuario="+ idUsuario;
+
+                HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
+
+                if (respuesta.IsSuccessStatusCode) {
+                    return respuesta.Content.ReadAsAsync<List<CotizacionObj>>().Result;
+                }
+                return null;
+            }
+        }
     }
 }

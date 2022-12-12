@@ -26,7 +26,13 @@ namespace Pasteleria.Controllers
                 Session["CorreoUsuario"] = resultado.correo;
                 Session["RolUsuario"] = resultado.tipoUsuario.descripcion;
                 Session["IdUsuario"] = (int)resultado.id;
-                return RedirectToAction("Principal", "Home");
+                if (resultado.tipoUsuario.descripcion == "Administrador") {
+                    return RedirectToAction("Index", "Cotizaciones");
+                }
+                else {
+                    return RedirectToAction("Listar", "Cotizaciones");
+                }
+                
             }
             else
             {

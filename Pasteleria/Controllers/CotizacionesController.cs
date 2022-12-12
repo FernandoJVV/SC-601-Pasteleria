@@ -14,6 +14,7 @@ namespace Pasteleria.Controllers
         private CotizacionModel _cotizacionModel = new CotizacionModel();
         private ComentarioModel _comentarioModel = new ComentarioModel();
 
+        [FiltroSesiones]
         // GET: Cotizaciones
         public ActionResult Index()
         {
@@ -27,6 +28,7 @@ namespace Pasteleria.Controllers
             }
         }
 
+        [FiltroSesiones]
         public ActionResult Detalles(int id) {
             try {
                 var cotizacion = _cotizacionModel.ObtenerCotizacion(id);
@@ -50,6 +52,7 @@ namespace Pasteleria.Controllers
             }
         }
 
+        [FiltroSesiones]
         [HttpPost]
         public ActionResult Editar(int COT_ID, decimal COT_ESTIMADO, int COT_EST_DESC) {
             try {
@@ -64,7 +67,7 @@ namespace Pasteleria.Controllers
             }
         }
 
-
+        [FiltroSesiones]
         [HttpPost]
         public ActionResult AgregarComentario(ComentarioObj com) {
             try {
@@ -78,6 +81,20 @@ namespace Pasteleria.Controllers
             catch (Exception) {
                 TempData["Error"] = "Error al agregar comentario";
                 return RedirectToAction("Detalles", new { id = com.IdCotizacion });
+            }
+        }
+
+        [FiltroSesiones]
+        [HttpGet]
+        public ActionResult Listar() {
+            try {
+                var email = Session["CorreoUsuario"].ToString();
+                var lista = _cotizacionModel.ListarCotizacionUsuario(email);
+                return View(lista);
+            }
+            catch (Exception) {
+
+                return View();
             }
         }
     }
