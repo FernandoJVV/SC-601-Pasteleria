@@ -30,7 +30,7 @@ namespace Pasteleria.Controllers
             }
         }
 
-        [FiltroSesiones]
+        [FiltroSesiones("Usuario")]
         public ActionResult Detalles(int id) {
             try {
                 var cotizacion = _cotizacionModel.ObtenerCotizacion(id);
@@ -69,7 +69,7 @@ namespace Pasteleria.Controllers
             }
         }
 
-        [FiltroSesiones]
+        [FiltroSesiones("Usuario")]
         [HttpPost]
         public ActionResult AgregarComentario(ComentarioObj com) {
             try {
@@ -86,7 +86,7 @@ namespace Pasteleria.Controllers
             }
         }
 
-        [FiltroSesiones]
+        [FiltroSesiones("Usuario")]
         [HttpGet]
         public ActionResult Listar() {
             try {

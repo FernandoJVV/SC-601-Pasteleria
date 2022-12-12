@@ -81,10 +81,5 @@ namespace Pasteleria.Controllers
                 return View("CambiaContrasena", new { id = datos.id });
         }
 
-
-       
-
-
-
     }
 }

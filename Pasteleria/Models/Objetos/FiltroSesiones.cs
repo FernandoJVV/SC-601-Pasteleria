@@ -9,27 +9,39 @@ namespace Pasteleria.Models.Objetos
 {
     public class FiltroSesiones : ActionFilterAttribute
     {
-        private string allow;
+        private bool allowUser;
 
-        public FiltroSesiones(string v) {
-            this.allow = v;
+        public FiltroSesiones(string permitir) {
+            if (permitir == "Usuario") {
+                this.allowUser = true;
+            }
         }
         public FiltroSesiones() {
-            this.allow = "Administrador";
+            this.allowUser = false;
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (filterContext.HttpContext.Session["CodigoSeguridad"] == null)
+            if (filterContext.HttpContext.Session["CodigoSeguridad"] == null || filterContext.HttpContext.Session["RolUsuario"] == null)
             {
-                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary
+                filterContext.Result = cambiarRuta();
+            }
+
+            var rol = filterContext.HttpContext.Session["RolUsuario"].ToString();
+
+            if (rol == "Usuario" && !allowUser) {
+                filterContext.Result = cambiarRuta();
+            }
+
+            base.OnActionExecuting(filterContext);
+        }
+
+        private RedirectToRouteResult cambiarRuta() {
+            return new RedirectToRouteResult(new RouteValueDictionary
                 {
                     { "controller", "Home" },
                     { "action", "Index" }
                 });
-            }
-
-            base.OnActionExecuting(filterContext);
         }
 
     }//class

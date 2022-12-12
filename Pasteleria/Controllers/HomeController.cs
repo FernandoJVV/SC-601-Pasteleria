@@ -16,7 +16,6 @@ namespace Pasteleria.Controllers
         //Instancia
         UsuarioModel modelUsuario = new UsuarioModel();
 
-
         [HttpGet]
         public ActionResult Index()
         {

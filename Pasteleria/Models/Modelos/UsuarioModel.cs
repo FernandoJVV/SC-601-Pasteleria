@@ -22,9 +22,9 @@ namespace Pasteleria.Models.Modelos
             using (HttpClient client = new HttpClient())
             {
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/UsuariosLista";
-                //string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
-                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
 
                 if (respuesta.IsSuccessStatusCode)
@@ -42,9 +42,9 @@ namespace Pasteleria.Models.Modelos
             using (HttpClient client = new HttpClient())
             {
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/ListarTipoUsuarios";
-                //string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
-                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
 
                 if (respuesta.IsSuccessStatusCode)
@@ -90,9 +90,9 @@ namespace Pasteleria.Models.Modelos
             using (HttpClient client = new HttpClient())
             {
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/ConsultarUsuarioID?id=" + id;
-                //string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
-                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
 
                 if (respuesta.IsSuccessStatusCode)
@@ -110,9 +110,9 @@ namespace Pasteleria.Models.Modelos
             using (HttpClient client = new HttpClient())
             {
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/ActualizarUsuario";
-                //string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
-                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 //Serialización System.Net.Http.Json;
                 JsonContent contenido = JsonContent.Create(obj);
@@ -134,9 +134,9 @@ namespace Pasteleria.Models.Modelos
             using (HttpClient client = new HttpClient())
             {
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/RegistrarUsuario";
-                //string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
-                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 //Serialización System.Net.Http.Json;
                 JsonContent contenido = JsonContent.Create(obj);
@@ -157,9 +157,9 @@ namespace Pasteleria.Models.Modelos
             using (HttpClient client = new HttpClient())
             {
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/CambiarEstadoUsuario";
-                //string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
-                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 //Serialización System.Net.Http.Json;
                 JsonContent contenido = JsonContent.Create(obj);
