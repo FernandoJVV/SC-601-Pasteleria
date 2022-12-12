@@ -73,16 +73,21 @@
                         <label>Niveles pastel</label>
                         @Html.Hidden("UsuarioCorreo", Session["CorreoUsuario"].ToString())
                         @Html.DropDownList("OpcionElegir", niveles, new { @class = "form-control", @required = true })
-                        <label>Niveles pastel</label>
+                        <br />
+                        <label>Sabor</label>
                         @Html.DropDownList("OpcionElegir", sabor, new { @class = "form-control", @required = true })
-                        <label>Niveles pastel</label>
+                        <br />
+                        <label>Color externo</label>
                         @Html.DropDownList("OpcionElegir", color, new { @class = "form-control", @required = true })
-                        <label>Niveles pastel</label>
+                        <br />
+                        <label>Tipo de decoración</label>
                         @Html.DropDownList("OpcionElegir", decoracion, new { @class = "form-control", @required = true })
-                        <label>Niveles pastel</label>
+                        <br />
+                        <label>Forma del pastel</label>
                         @Html.DropDownList("OpcionElegir", forma, new { @class = "form-control", @required = true })
+                        <br />
                         <label>Comentarios adicionales</label>
-                        @Html.TextArea("Comentario", new { @class = "form-control", @required = true })
+                        @Html.TextArea("Comentario", new { @class = "form-control", @required = true, @placeholder = "Agregar datos adiccionales para que la cotización sea efectiva." })
                     </div>
                 </div>
                 <div class="modal-footer">
