@@ -41,7 +41,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.telefono, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                    @Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @class = "form-control", @required = "required", @onkeypress = "return numbersOnly(event)" } })
                     @Html.ValidationMessageFor(model => model.telefono, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -49,7 +49,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.tipoUsuario, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.tipoUsuario.id, ViewBag.ComboTiposUsuario as List<SelectListItem>, new { @class = "form-control" , @required = "required" })
+                    @Html.DropDownListFor(model => model.tipoUsuario.id, ViewBag.ComboTiposUsuario as List<SelectListItem>, new { @class = "form-control", @required = "required" })
                     @Html.ValidationMessageFor(model => model.tipoUsuario.id, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -57,10 +57,22 @@
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Guardar" class="btn btn-success" style="width:100px" />
-                    @Html.ActionLink("Regresar", "UsuariosConsulta", "Usuario", null, new { @class = "btn btn-warning"})
+                    @Html.ActionLink("Regresar", "UsuariosConsulta", "Usuario", null, new { @class = "btn btn-warning" })
                 </div>
             </div>
         </div>
     }
 </div>
+<script type="text/javascript">
+
+    function numbersOnly(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode != 46 && charCode > 31
+            && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+
+</script>
 

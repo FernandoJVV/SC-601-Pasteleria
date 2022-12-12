@@ -19,67 +19,93 @@ namespace Pasteleria.Models.Modelos
 
         public List<UsuarioObj> UsuariosLista()
         {
-            using (HttpClient client = new HttpClient())
-            {
-                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/UsuariosLista";
-                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
-
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
-
-                if (respuesta.IsSuccessStatusCode)
+            try {
+                using (HttpClient client = new HttpClient())
                 {
-                    //Deserialización System.Net.Http.Formatting.Extension
-                    return respuesta.Content.ReadAsAsync<List<UsuarioObj>>().Result;
+                    string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/UsuariosLista";
+                    string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                        HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
+
+                        if (respuesta.IsSuccessStatusCode)
+                        {
+                            //Deserialización System.Net.Http.Formatting.Extension
+                            return respuesta.Content.ReadAsAsync<List<UsuarioObj>>().Result;
+                        }
+                        return null;
                 }
+            }
+            catch (Exception)
+            {
+                Exception ex = new Exception("Error al obtener lista del usuario.");
                 return null;
             }
-
         }
 
         public List<SelectListItem> ListarTipoUsuarios()
         {
-            using (HttpClient client = new HttpClient())
+            try
             {
+                using (HttpClient client = new HttpClient())
+                {
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/ListarTipoUsuarios";
                 string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+                
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                    HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
 
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
-
-                if (respuesta.IsSuccessStatusCode)
-                {
-                    //Deserialización System.Net.Http.Formatting.Extension
-                    return respuesta.Content.ReadAsAsync<List<SelectListItem>>().Result;
+                    if (respuesta.IsSuccessStatusCode)
+                    {
+                        //Deserialización System.Net.Http.Formatting.Extension
+                        return respuesta.Content.ReadAsAsync<List<SelectListItem>>().Result;
+                    }
+                    return null;
                 }
+            }
+            catch (Exception)
+            {
+                Exception ex = new Exception("Error al obtener lista de tipos de usuario.");
                 return null;
             }
         }
 
 
         public UsuarioObj ValidarUsuario(UsuarioObj usuario) {
-            using (HttpClient client = new HttpClient()) {
-                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/ValidarUsuario";
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/ValidarUsuario";
 
-                //Serialización System.Net.Http.Json;
-                JsonContent contenido = JsonContent.Create(usuario);
+                    //Serialización System.Net.Http.Json;
+                    JsonContent contenido = JsonContent.Create(usuario);
 
-                HttpResponseMessage respuesta = client.PostAsync(rutaApi, contenido).Result;   
-                if (respuesta.IsSuccessStatusCode) {
-                    var Respuesta = respuesta.Content.ReadAsAsync<UsuarioObj>().Result;
-                    if (Respuesta.token == null) {
-                        return null;
+                    HttpResponseMessage respuesta = client.PostAsync(rutaApi, contenido).Result;
+                    if (respuesta.IsSuccessStatusCode)
+                    {
+                        var Respuesta = respuesta.Content.ReadAsAsync<UsuarioObj>().Result;
+                        if (Respuesta.token == null)
+                        {
+                            return null;
+                        }
+                        var jwt = new JwtSecurityTokenHandler().ReadJwtToken(Respuesta.token);
+                        string role = jwt.Claims.First(c => c.Type == ClaimTypes.Role).Value;
+                        TipoUsuarioModel tipoUsuarioModel = new TipoUsuarioModel(0, role);
+                        usuario.tipoUsuario = tipoUsuarioModel;
+                        usuario.token = Respuesta.token;
+                        usuario.id = Respuesta.id;
+                        //Deserialización System.Net.Http.Formatting.Extension
+                        //return respuesta.Content.ReadAsAsync<RespuestaUsuario>().Result;
+                        return usuario;
                     }
-                    var jwt = new JwtSecurityTokenHandler().ReadJwtToken(Respuesta.token);
-                    string role = jwt.Claims.First(c => c.Type == ClaimTypes.Role).Value;
-                    TipoUsuarioModel tipoUsuarioModel = new TipoUsuarioModel(0, role);
-                    usuario.tipoUsuario = tipoUsuarioModel;
-                    usuario.token = Respuesta.token;
-                    usuario.id = Respuesta.id;
-                    //Deserialización System.Net.Http.Formatting.Extension
-                    //return respuesta.Content.ReadAsAsync<RespuestaUsuario>().Result;
-                    return usuario;
+                    return null;
                 }
+            }
+            catch (Exception)
+            {
+                Exception ex = new Exception("Error en la validacion del usuario.");
                 return null;
             }
         }
@@ -87,19 +113,27 @@ namespace Pasteleria.Models.Modelos
 
         public UsuarioObj ConsultarUsuarioID (int id)
         {
-            using (HttpClient client = new HttpClient())
+            try
             {
-                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/ConsultarUsuarioID?id=" + id;
-                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
-
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
-
-                if (respuesta.IsSuccessStatusCode)
+                using (HttpClient client = new HttpClient())
                 {
-                    //Deserialización System.Net.Http.Formatting.Extension
-                    return respuesta.Content.ReadAsAsync<UsuarioObj>().Result;
+                    string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/ConsultarUsuarioID?id=" + id;
+                    string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                    HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
+
+                    if (respuesta.IsSuccessStatusCode)
+                    {
+                        //Deserialización System.Net.Http.Formatting.Extension
+                        return respuesta.Content.ReadAsAsync<UsuarioObj>().Result;
+                    }
+                    return null;
                 }
+            }
+            catch (Exception)
+            {
+                Exception ex = new Exception("Error al consultar usuario por ID.");
                 return null;
             }
         }
@@ -107,88 +141,125 @@ namespace Pasteleria.Models.Modelos
 
         public UsuarioObj ActualizarUsuario(UsuarioObj obj)
         {
-            using (HttpClient client = new HttpClient())
+            try
             {
-                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/ActualizarUsuario";
-                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
-
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-                //Serialización System.Net.Http.Json;
-                JsonContent contenido = JsonContent.Create(obj);
-
-                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                HttpResponseMessage respuesta = client.PutAsync(rutaApi, contenido).Result;
-
-                if (respuesta.IsSuccessStatusCode)
+                using (HttpClient client = new HttpClient())
                 {
-                    //Deserialización System.Net.Http.Formatting.Extension
-                    return respuesta.Content.ReadAsAsync<UsuarioObj>().Result;
+                    string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/ActualizarUsuario";
+                    string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                    //Serialización System.Net.Http.Json;
+                    JsonContent contenido = JsonContent.Create(obj);
+
+                    //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                    HttpResponseMessage respuesta = client.PutAsync(rutaApi, contenido).Result;
+
+                    if (respuesta.IsSuccessStatusCode)
+                    {
+                        //Deserialización System.Net.Http.Formatting.Extension
+                        return respuesta.Content.ReadAsAsync<UsuarioObj>().Result;
+                    }
+                    return null;
                 }
+            }
+            catch (Exception)
+            {
+                Exception ex = new Exception("Error al actualizar usuario.");
                 return null;
             }
         }
 
         public UsuarioObj RegistrarUsuario(UsuarioObj obj)
         {
-            using (HttpClient client = new HttpClient())
+            try
             {
-                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/RegistrarUsuario";
-                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
-
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-                //Serialización System.Net.Http.Json;
-                JsonContent contenido = JsonContent.Create(obj);
-
-                HttpResponseMessage respuesta = client.PostAsync(rutaApi, contenido).Result;
-
-                if (respuesta.IsSuccessStatusCode)
+                using (HttpClient client = new HttpClient())
                 {
-                    //Deserialización System.Net.Http.Formatting.Extension
-                    return respuesta.Content.ReadAsAsync<UsuarioObj>().Result;
+                    string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/RegistrarUsuario";
+                    string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                    //Serialización System.Net.Http.Json;
+                    JsonContent contenido = JsonContent.Create(obj);
+
+                    HttpResponseMessage respuesta = client.PostAsync(rutaApi, contenido).Result;
+
+                    if (respuesta.IsSuccessStatusCode)
+                    {
+                        //Deserialización System.Net.Http.Formatting.Extension
+                        return respuesta.Content.ReadAsAsync<UsuarioObj>().Result;
+                    }
+                    return null;
                 }
+            }
+            catch (Exception)
+            {
+                Exception ex = new Exception("Error al actualizar usuario.");
                 return null;
             }
         }
 
         public UsuarioObj CambiarEstadoUsuario(UsuarioObj obj)
         {
-            using (HttpClient client = new HttpClient())
+            try
             {
-                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/CambiarEstadoUsuario";
-                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
-
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-                //Serialización System.Net.Http.Json;
-                JsonContent contenido = JsonContent.Create(obj);
-
-                HttpResponseMessage respuesta = client.PutAsync(rutaApi, contenido).Result;
-
-                if (respuesta.IsSuccessStatusCode)
+                using (HttpClient client = new HttpClient())
                 {
-                    //Deserialización System.Net.Http.Formatting.Extension
-                    return respuesta.Content.ReadAsAsync<UsuarioObj>().Result;
+                    string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/CambiarEstadoUsuario";
+                    string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                    //Serialización System.Net.Http.Json;
+                    JsonContent contenido = JsonContent.Create(obj);
+
+                    HttpResponseMessage respuesta = client.PutAsync(rutaApi, contenido).Result;
+
+                    if (respuesta.IsSuccessStatusCode)
+                    {
+                        //Deserialización System.Net.Http.Formatting.Extension
+                        return respuesta.Content.ReadAsAsync<UsuarioObj>().Result;
+                    }
+                    return null;
                 }
+            }
+            catch (Exception)
+            {
+                Exception ex = new Exception("Error al cambiar estado del usuario.");
                 return null;
             }
         }
+
+
         public bool NuevoRegistro(UsuarioObj usuario) {
-            using (HttpClient client = new HttpClient()) {
-                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/NuevoRegistro";
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Usuario/NuevoRegistro";
 
-                //Serialización System.Net.Http.Json;
-                JsonContent contenido = JsonContent.Create(usuario);
+                    //Serialización System.Net.Http.Json;
+                    JsonContent contenido = JsonContent.Create(usuario);
 
-                HttpResponseMessage respuesta = client.PostAsync(rutaApi, contenido).Result;
-                if (respuesta.IsSuccessStatusCode) {
-                    var textoRespuesta = respuesta.Content.ReadAsAsync<string>().Result;
-                    if (textoRespuesta == null) {
-                        return false;
+                    HttpResponseMessage respuesta = client.PostAsync(rutaApi, contenido).Result;
+                    if (respuesta.IsSuccessStatusCode)
+                    {
+                        var textoRespuesta = respuesta.Content.ReadAsAsync<string>().Result;
+                        if (textoRespuesta == null)
+                        {
+                            return false;
+                        }
                     }
+                    return true;
                 }
-                return true;
+            }
+            catch (Exception)
+            {
+                Exception ex = new Exception("Error al registrar nuevo usuario.");
+                return false;
             }
         }
     }

@@ -34,14 +34,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model) {
-                            <tr>
-                                <td>@item.COT_ID</td>
-                                <td>@item.COT_ESTIMADO</td>
-                                <td>@item.COT_EST_DESC</td>
-                                <td><a href="@Url.Action("Detalles","Cotizaciones",new { id = item.COT_ID})"><i data-feather="eye"></i></a></td>
-                            </tr>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.COT_ID</td>
+                                    <td>@item.COT_ESTIMADO</td>
+                                    <td>@item.COT_EST_DESC</td>
+                                    <td><a href="@Url.Action("Detalles","Cotizaciones",new { id = item.COT_ID})"><i data-feather="eye"></i></a></td>
+                                </tr>
+                            }
+
                         }
+
                     </tbody>
                 </table>
             </div>

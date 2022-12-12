@@ -17,9 +17,7 @@ namespace Pasteleria.Models.Modelos
             using (HttpClient client = new HttpClient())
             {
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Correo/existeCorreo?correo=" + correo;
-                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 JsonContent contenido = JsonContent.Create(correo);
                 HttpResponseMessage respuesta = client.PostAsync(rutaApi, contenido).Result;
@@ -38,11 +36,9 @@ namespace Pasteleria.Models.Modelos
             using (HttpClient client = new HttpClient())
             {
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Correo/CambiarContrasenaRecuperacion";
-                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
                 JsonContent contenido = JsonContent.Create(obj);
 
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage respuesta = client.PostAsync(rutaApi, contenido).Result;
 
                 if (respuesta.IsSuccessStatusCode)
