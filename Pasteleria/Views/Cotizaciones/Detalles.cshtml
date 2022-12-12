@@ -1,13 +1,18 @@
 ﻿@model Pasteleria.Models.Objetos.CotizacionObj
 @{
     ViewBag.Title = "Detalles";
+    var esUsuario = (Session["RolUsuario"].ToString() == "Usuario");
+    var habilitarAdmin = false;
+    if (esUsuario) {
+        habilitarAdmin = true;
+    }
 }
 
 @section pageCSS{
     <link href="~/assets/css/users/account-setting.css" rel="stylesheet" type="text/css" />
 }
 
-@{ 
+@{
     var listaOpciones = ViewBag.Opciones as List<Pasteleria.Models.Objetos.OpcionObj>;
     var niveles = (from x in listaOpciones where x.NombreCategoria.Equals("Niveles") select x.Descripcion).FirstOrDefault();
     var sabor = (from x in listaOpciones where x.NombreCategoria.Equals("Sabor") select x.Descripcion).FirstOrDefault();
@@ -50,7 +55,7 @@
                                                         <div class="col-sm-3">
                                                             <div class="form-group">
                                                                 <label for="usuariolbl">Precio estimado</label>
-                                                                @Html.EditorFor(model => model.COT_ESTIMADO, new { htmlAttributes = new { @class = "form-control" }, @required = true })
+                                                                @Html.EditorFor(model => model.COT_ESTIMADO, new { htmlAttributes = new { @class = "form-control", @required = true } })
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3">
@@ -109,13 +114,14 @@
 
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-lg-3 offset-md-11">
-                                                <input class="btn btn-primary" type="submit" name="btnSubmit" value="Guardar" />
+                                        @if (!esUsuario) {
+                                            <div class="row">
+                                                <div class="col-md-12 text-right mb-5">
+                                                    <input class="btn btn-primary" type="submit" name="btnSubmit" value="Guardar" />
+                                                </div>
                                             </div>
-                                        </div>
+                                        }
                                     </div>
-                                    
                                 </div>
 
                             </div>
@@ -129,45 +135,48 @@
                             <h5 class="">Comentarios</h5>
                             <div class="row">
                                 <div class="col-md-11 mx-auto">
-                                    <div class="form-group">
-                                        <label for="aboutBio">Bio</label>
-                                        <textarea class="form-control" id="aboutBio" placeholder="Tell something interesting about yourself" rows="10">I'm Creative Director and UI/UX Designer from Sydney, Australia, working in web development and print media. I enjoy turning complex problems into simple, beautiful and intuitive designs.
+                                    @foreach (var item in ViewBag.Comentarios as List<Pasteleria.Models.Objetos.ComentarioObj>) {
+                                        <div class="form-group">
+                                            <label class="bold" for="aboutBio">@item.Usuario</label>
+                                            <p class="form-control">
+                                                @item.Comentario
+                                            </p>
+                                        </div>
+                                    }
 
-My job is to build your website so that it is functional and user-friendly but at the same time attractive. Moreover, I add personal touch to your product and make sure that is eye-catching and easy to use. My aim is to bring across your message and identity in the most creative way. I created web design for many famous brand companies.</textarea>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
                     </form>
                 </div>
+                @if (((Model.COT_EST_DESC != "Finalizada") && esUsuario) || !esUsuario) {
+                    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+                        @using (Html.BeginForm("AgregarComentario", "Cotizaciones", FormMethod.Post, new { @class = "section work-platforms" })) {
+                            @Html.AntiForgeryToken()
+                            <div class="info">
+                                <h5 class="">Ingresar nuevo comentario</h5>
+                                <div class="row">
+                                    <div class="col-md-11 mx-auto">
 
-                <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
-                    <form id="work-platforms" class="section work-platforms">
-                        <div class="info">
-                            <h5 class="">Work Platforms</h5>
-                            <div class="row">
-                                <div class="col-md-12 text-right mb-5">
-                                    <button id="add-work-platforms" class="btn btn-primary">Add</button>
-                                </div>
-                                <div class="col-md-11 mx-auto">
+                                        <div class="platform-div">
+                                            <div class="form-group">
+                                                <label for="platform-description">@Session["RolUsuario"].ToString()</label>
+                                                <input class="" type="hidden" name="IdCotizacion" value="@Model.COT_ID" />
+                                                <textarea name="Comentario" required class="form-control mb-4"></textarea>
+                                            </div>
+                                        </div>
 
-                                    <div class="platform-div">
-                                        <div class="form-group">
-                                            <label for="platform-title">Platforms Title</label>
-                                            <input type="text" class="form-control mb-4" id="platform-title" placeholder="Platforms Title" value="Web Design">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="platform-description">Description</label>
-                                            <textarea class="form-control mb-4" id="platform-description" placeholder="Platforms Description" rows="10">Duis aute irure dolor in reprehenderit in voluptate velit esse eu fugiat nulla pariatur.</textarea>
-                                        </div>
                                     </div>
-
+                                    <div class="col-md-12 text-right mb-5">
+                                        <button id="add-work-platforms" class="btn btn-primary">Añadir</button>
+                                    </div>
                                 </div>
-
                             </div>
-                        </div>
-                    </form>
-                </div>
+                        }
+                    </div>
+                }
+
 
             </div>
         </div>
@@ -185,5 +194,14 @@ My job is to build your website so that it is functional and user-friendly but a
                 }
             });
         });
+
     </script>
+    @if (esUsuario) {
+        <script>
+            $(document).ready(function () {
+                $('#COT_ESTIMADO').prop('disabled', true);
+                $('#COT_EST_DESC').prop('disabled', true);
+            });
+        </script>
+    }
 }

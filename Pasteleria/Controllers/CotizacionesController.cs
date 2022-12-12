@@ -12,6 +12,8 @@ namespace Pasteleria.Controllers
     public class CotizacionesController : Controller
     {
         private CotizacionModel _cotizacionModel = new CotizacionModel();
+        private ComentarioModel _comentarioModel = new ComentarioModel();
+
         // GET: Cotizaciones
         public ActionResult Index()
         {
@@ -35,8 +37,11 @@ namespace Pasteleria.Controllers
 
                 opcionesCotizacion = _cotizacionModel.ObtenerOpcionesCotizacion(id);
 
+                var comentarios = _comentarioModel.ObtenerComentarios(id);
+
                 ViewBag.Opciones = opcionesCotizacion;
                 ViewBag.ComboEstados = opciones;
+                ViewBag.Comentarios = comentarios;
                 return View(cotizacion);
             }
             catch (Exception) {
@@ -56,6 +61,23 @@ namespace Pasteleria.Controllers
             catch (Exception) {
                 TempData["Error"] = "Error";
                 return RedirectToAction("Detalles", new { id = COT_ID });
+            }
+        }
+
+
+        [HttpPost]
+        public ActionResult AgregarComentario(ComentarioObj com) {
+            try {
+                var email = Session["CorreoUsuario"].ToString();
+
+                var cotizacion = _comentarioModel.AgregarComentarios(email, com);
+                TempData["Mensaje"] = "Comentario añadido exitosamente";
+
+                return RedirectToAction("Detalles", new { id = com.IdCotizacion });
+            }
+            catch (Exception) {
+                TempData["Error"] = "Error al agregar comentario";
+                return RedirectToAction("Detalles", new { id = com.IdCotizacion });
             }
         }
     }

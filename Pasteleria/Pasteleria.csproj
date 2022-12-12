@@ -177,7 +177,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Modelos\ComentarioModel.cs" />
     <Compile Include="Models\Modelos\CotizacionModel.cs" />
+    <Compile Include="Models\Objetos\ComentarioObj.cs" />
     <Compile Include="Models\Objetos\EstadoObj.cs" />
     <Compile Include="Models\Modelos\OpcionModel.cs" />
     <Compile Include="Models\Modelos\TipoUsuarioModel.cs" />
