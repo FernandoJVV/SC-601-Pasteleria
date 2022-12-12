@@ -25,6 +25,8 @@ namespace Pasteleria.Models.Objetos
             if (filterContext.HttpContext.Session["CodigoSeguridad"] == null || filterContext.HttpContext.Session["RolUsuario"] == null)
             {
                 filterContext.Result = cambiarRuta();
+                base.OnActionExecuting(filterContext);
+                return;
             }
             if (filterContext.RouteData.Values["controller"].ToString() != "Home") {
                 var rol = filterContext.HttpContext.Session["RolUsuario"].ToString();

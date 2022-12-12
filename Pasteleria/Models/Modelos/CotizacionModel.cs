@@ -148,7 +148,7 @@ namespace Pasteleria.Models.Modelos
             dtoCot.COT_USU_ID = idUsuario;
 
             using (HttpClient client = new HttpClient()) {
-                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/api/Cotizaciones/RegistrarCotizaciones";
+                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Cotizaciones/RegistrarCotizaciones";
                 string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -178,6 +178,25 @@ namespace Pasteleria.Models.Modelos
                 }
                 else {
                     return 0;
+                }
+            }
+        }
+
+        public bool AgregarOpcionCotizacion(DTOOpcionXCotizacionObj dtoOpcion) {
+            using (HttpClient client = new HttpClient()) {
+                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Cotizaciones/RegistroOpcionXCotizacion";
+
+                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                JsonContent content = JsonContent.Create(dtoOpcion);
+
+                HttpResponseMessage respuesta = client.PostAsync(rutaApi, content).Result;
+
+                if (respuesta.IsSuccessStatusCode) {
+                    return true;
+                }
+                else {
+                    return false;
                 }
             }
         }

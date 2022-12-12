@@ -34,10 +34,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if (Model != null)
-                        {
-                            foreach (var item in Model)
-                            {
+                        @if (Model != null) {
+                            foreach (var item in Model) {
                                 <tr>
                                     <td>@item.COT_ID</td>
                                     <td>@item.COT_ESTIMADO</td>
@@ -107,6 +105,9 @@
 @section scripts{
     <!-- BEGIN PAGE LEVEL SCRIPTS -->
     <script src="~/plugins/table/datatable/datatables.js"></script>
+    <script src="~/plugins/sweetalerts/sweetalert2.min.js"></script>
+    <script src="~/plugins/sweetalerts/sweetalert.js"></script>
+
     <script>
         $(document).ready(function () {
             $('#cotizacionesTable').DataTable({
@@ -124,14 +125,63 @@
         });
 
         function CrearCotizacion() {
+            var $idCotizacion;
             $.ajax({
                 url: "@Url.Action("CrearCotizacion", "Cotizaciones")",
-                data: data,
                 success: function (data) {
-                    console.log(data);
-                },
-                dataType: dataType
+                    $idCotizacion = data;
+                    if ($idCotizacion != 0) {
+                        EnviarOpciones($idCotizacion);
+                        EnviarComentario($idCotizacion);
+                        MensajeExitoso();
+                    }
+                }
             });
         }
+
+        function EnviarOpciones($idCotizacion) {
+            let exito = false;
+            console.log($idCotizacion);
+            $("select#OpcionElegir").each(function (index) {
+                $.ajax({
+                type: "POST",
+                url: "@Url.Action("AgregarOpcionesCotizacion", "Cotizaciones")",
+                data: {
+                    OXC_COT_ID: $idCotizacion,
+                    OXC_OPC_ID: $(this).val()
+                }
+            });
+            });
+
+        }
+
+        function EnviarComentario($idCotizacion) {
+            let exito = false;
+            if ($("#Comentario").val() == "") {
+                return true;
+            }
+            $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("AgregarComentario", "Cotizaciones")",
+                    data: {
+                        IdCotizacion: $idCotizacion,
+                        Comentario: $("#Comentario").val()
+                    }
+                });
+
+        }
+
+        function MensajeExitoso() {
+            Swal.fire({
+                position: 'top-end',
+                title: 'Atención',
+                text: "Se ha creado la cotización exitosamente.",
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            }).then(function () {
+                window.location = "@Url.Action("Listar","Cotizaciones")";
+            });
+        }
+
     </script>
 }

@@ -15,7 +15,13 @@ namespace Pasteleria.Models.Objetos
         public bool Estado { get; set; }
 
     }
+    public class DTOOpcionXCotizacionObj
+    {
+        public int OXC_ID { get; set; }
+        public int OXC_COT_ID { get; set; }
+        public int OXC_OPC_ID { get; set; }
 
+    }
     public class CategoriaObj
     {
         public int CatId { get; set; }

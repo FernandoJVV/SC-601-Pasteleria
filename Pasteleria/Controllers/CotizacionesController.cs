@@ -163,5 +163,21 @@ namespace Pasteleria.Controllers
                 return 0;
             }
         }
+
+        [FiltroSesiones("Usuario")]
+        public bool AgregarOpcionesCotizacion(DTOOpcionXCotizacionObj dtoOpcion) {
+            try {
+                if (_cotizacionModel.AgregarOpcionCotizacion(dtoOpcion)) {
+                    return true;
+                }else {
+                    return false;
+                }
+                
+            }
+            catch (Exception) {
+
+                return false;
+            }
+        }
     }
 }
