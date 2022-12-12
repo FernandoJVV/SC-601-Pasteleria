@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Http.Json;
 using System.Net.Http;
 using System.Web;
+using System.Net.Http.Headers;
 
 namespace Pasteleria.Models.Modelos
 {
@@ -17,14 +18,14 @@ namespace Pasteleria.Models.Modelos
             using (HttpClient client = new HttpClient())
             {
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Opcion/Lista";
-                //string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
-                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
 
                 if (respuesta.IsSuccessStatusCode)
                 {
-                    //Deserialización System.Net.Http.Formatting.Extension
+
                     return respuesta.Content.ReadAsAsync<List<OpcionObj>>().Result;
                 }
                 return null;
@@ -37,15 +38,15 @@ namespace Pasteleria.Models.Modelos
         {
             using (HttpClient client = new HttpClient())
             {
-                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Opcion/ConsultaOpcion?id="+id;
-                //string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Opcion/ConsultaOpcion?id=" + id;
+                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
-                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
 
                 if (respuesta.IsSuccessStatusCode)
                 {
-                    //Deserialización System.Net.Http.Formatting.Extension
+
                     return respuesta.Content.ReadAsAsync<OpcionObj>().Result;
                 }
                 return null;
@@ -59,18 +60,19 @@ namespace Pasteleria.Models.Modelos
             using (HttpClient client = new HttpClient())
             {
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Opcion/ActualizarOpcion";
-                //string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+
+                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
 
-                //Serializacion
                 JsonContent contenido = JsonContent.Create(opcion);
 
-                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
                 HttpResponseMessage respuesta = client.PutAsync(rutaApi, contenido).Result;
 
                 if (respuesta.IsSuccessStatusCode)
                 {
-                    //Deserialización System.Net.Http.Formatting.Extension
+
                     return respuesta.ReasonPhrase;
                 }
                 return null;
@@ -85,17 +87,16 @@ namespace Pasteleria.Models.Modelos
             using (HttpClient client = new HttpClient())
             {
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Opcion/CrearOpcion";
-                //string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
-                //Serializacion
                 JsonContent contenido = JsonContent.Create(opcion);
-                
-                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage respuesta = client.PostAsync(rutaApi, contenido).Result;
 
                 if (respuesta.IsSuccessStatusCode)
                 {
-                    //Deserialización System.Net.Http.Formatting.Extension
+
                     return respuesta.ReasonPhrase;
                 }
                 return null;
@@ -108,14 +109,14 @@ namespace Pasteleria.Models.Modelos
             using (HttpClient client = new HttpClient())
             {
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Opcion/getCategorias";
-                //string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
-                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
 
                 if (respuesta.IsSuccessStatusCode)
                 {
-                    //Deserialización System.Net.Http.Formatting.Extension
+
                     return respuesta.Content.ReadAsAsync<List<CategoriaObj>>().Result;
                 }
                 return null;
@@ -129,14 +130,14 @@ namespace Pasteleria.Models.Modelos
             using (HttpClient client = new HttpClient())
             {
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Opcion/EliminarOpcion?opcion=" + id;
-                //string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
-                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage respuesta = client.DeleteAsync(rutaApi).Result;
 
                 if (respuesta.IsSuccessStatusCode)
                 {
-                    //Deserialización System.Net.Http.Formatting.Extension
+
                     return respuesta.ReasonPhrase;
                 }
                 return null;
@@ -144,16 +145,19 @@ namespace Pasteleria.Models.Modelos
 
         }
 
-        public List<OpcionObj> OpcionesHabilitadas() {
-            using (HttpClient client = new HttpClient()) {
+        public List<OpcionObj> OpcionesHabilitadas()
+        {
+            using (HttpClient client = new HttpClient())
+            {
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Opcion/OpcionesHabilitadas";
-                //string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
-                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
 
-                if (respuesta.IsSuccessStatusCode) {
-                    //Deserialización System.Net.Http.Formatting.Extension
+                if (respuesta.IsSuccessStatusCode)
+                {
+
                     return respuesta.Content.ReadAsAsync<List<OpcionObj>>().Result;
                 }
                 return null;
