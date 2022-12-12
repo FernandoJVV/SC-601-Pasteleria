@@ -10,7 +10,7 @@
 @using (Html.BeginForm("RegistroOpcion", "Opcion", FormMethod.Post)) 
 {
     @Html.AntiForgeryToken()
-    
+    <br />
     <div class="form-horizontal">
         <h2>Registrar nueva opcion</h2>
         <hr />
@@ -53,8 +53,8 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-md-offset-2 col-md-10">
-                    @Html.ActionLink("Regresar", "OpcionesLista", null, new { @class = "btn btn-warning" })
                     <input type="submit" value="Crear" class="btn btn-dark" />
+                    @Html.ActionLink("Regresar", "OpcionesLista", null, new { @class = "btn btn-warning" })
                 </div>
 
             </div>

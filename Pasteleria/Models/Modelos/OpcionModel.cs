@@ -124,5 +124,28 @@ namespace Pasteleria.Models.Modelos
         }
 
 
+        public string EliminarOpcion(int id)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "api/Opcion/EliminarOpcion?opcion=" + id;
+                //string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+
+                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                HttpResponseMessage respuesta = client.DeleteAsync(rutaApi).Result;
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    //Deserialización System.Net.Http.Formatting.Extension
+                    return respuesta.ReasonPhrase;
+                }
+                return null;
+            }
+
+        }
+
+
+
+
     }
 }

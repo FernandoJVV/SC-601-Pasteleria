@@ -91,6 +91,13 @@ namespace Pasteleria.Controllers
                 return View("Error");
         }
 
+        [HttpDelete]
+        public string EliminarOpcion(int id)
+        {
+            var resultado = model.EliminarOpcion(id);
+            return resultado;
+        }
+
 
 
     }
