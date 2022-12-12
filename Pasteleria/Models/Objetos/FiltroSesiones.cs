@@ -9,6 +9,15 @@ namespace Pasteleria.Models.Objetos
 {
     public class FiltroSesiones : ActionFilterAttribute
     {
+        private string allow;
+
+        public FiltroSesiones(string v) {
+            this.allow = v;
+        }
+        public FiltroSesiones() {
+            this.allow = "Administrador";
+        }
+
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (filterContext.HttpContext.Session["CodigoSeguridad"] == null)

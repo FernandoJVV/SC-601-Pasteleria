@@ -3,6 +3,7 @@ using Pasteleria.Models.Objetos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Reflection.Emit;
 using System.Web;
 using System.Web.Mvc;
@@ -13,6 +14,7 @@ namespace Pasteleria.Controllers
     {
         private CotizacionModel _cotizacionModel = new CotizacionModel();
         private ComentarioModel _comentarioModel = new ComentarioModel();
+        private OpcionModel _opcionesModel = new OpcionModel();
 
         [FiltroSesiones]
         // GET: Cotizaciones
@@ -88,6 +90,49 @@ namespace Pasteleria.Controllers
         [HttpGet]
         public ActionResult Listar() {
             try {
+                var resultado = _opcionesModel.OpcionesHabilitadas();
+                var niveles = new List<SelectListItem>();
+                var sabor = new List<SelectListItem>();
+                var color = new List<SelectListItem>();
+                var decoracion = new List<SelectListItem>();
+                var forma = new List<SelectListItem>();
+
+                foreach (var item in (from x in resultado where x.NombreCategoria =="Niveles" select x).ToList()) {
+                    niveles.Add(new SelectListItem {
+                        Text = item.Descripcion,
+                        Value = item.OpcionId.ToString()
+                    });
+                }
+                foreach (var item in (from x in resultado where x.NombreCategoria == "Sabor" select x).ToList()) {
+                    sabor.Add(new SelectListItem {
+                        Text = item.Descripcion,
+                        Value = item.OpcionId.ToString()
+                    });
+                }
+                foreach (var item in (from x in resultado where x.NombreCategoria == "Color externo" select x).ToList()) {
+                    color.Add(new SelectListItem {
+                        Text = item.Descripcion,
+                        Value = item.OpcionId.ToString()
+                    });
+                }
+                foreach (var item in (from x in resultado where x.NombreCategoria == "Decoración" select x).ToList()) {
+                    decoracion.Add(new SelectListItem {
+                        Text = item.Descripcion,
+                        Value = item.OpcionId.ToString()
+                    });
+                }
+                foreach (var item in (from x in resultado where x.NombreCategoria == "Forma" select x).ToList()) {
+                    forma.Add(new SelectListItem {
+                        Text = item.Descripcion,
+                        Value = item.OpcionId.ToString()
+                    });
+                }
+                ViewBag.Niveles = niveles;
+                ViewBag.Sabores = sabor;
+                ViewBag.Colores = color;
+                ViewBag.Decoraciones = decoracion;
+                ViewBag.Formas = forma;
+
                 var email = Session["CorreoUsuario"].ToString();
                 var lista = _cotizacionModel.ListarCotizacionUsuario(email);
                 return View(lista);

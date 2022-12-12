@@ -10,12 +10,15 @@
     <link rel="stylesheet" type="text/css" href="~/plugins/table/datatable/dt-global_style.css">
 }
 
-<div class="page-header">
-    <div class="page-title">
-        <h3>Lista de cotizaciones</h3>
-    </div>
-</div>
+<!--Encabezado-->
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+        <img src="https://cdn-icons-png.flaticon.com/512/1165/1165674.png" width="55" height="55" class="d-inline-block align-top" alt="">
+        <h1 class="d-inline text-center">Cotizaciones realizadas</h1>
+    </a>
+    <button type="button" class="btn btn-primary btn btn-info pull-right mr-3" data-toggle="modal" data-target="#agregarModal">Solicitar nueva cotización</button>
 
+</nav>
 <div class="row layout-top-spacing" id="cancel-row">
 
     <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
@@ -45,6 +48,50 @@
         </div>
     </div>
 </div>
+
+@{
+    var niveles = ViewBag.Niveles as List<SelectListItem>;
+    var sabor = ViewBag.Sabores as List<SelectListItem>;
+    var color = ViewBag.Colores as List<SelectListItem>;
+    var decoracion = ViewBag.Decoraciones as List<SelectListItem>;
+    var forma = ViewBag.Formas as List<SelectListItem>;
+}
+
+@section modals{
+    <!-- Modal -->
+    <div class="modal fade" id="agregarModal" data-bs-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="agregarModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="agregarModalLabel">Solicitar cotización</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Niveles pastel</label>
+                        @Html.Hidden("UsuarioCorreo", Session["CorreoUsuario"].ToString())
+                        @Html.DropDownList("OpcionElegir", niveles, new { @class = "form-control", @required = true })
+                        <label>Niveles pastel</label>
+                        @Html.DropDownList("OpcionElegir", sabor, new { @class = "form-control", @required = true })
+                        <label>Niveles pastel</label>
+                        @Html.DropDownList("OpcionElegir", color, new { @class = "form-control", @required = true })
+                        <label>Niveles pastel</label>
+                        @Html.DropDownList("OpcionElegir", decoracion, new { @class = "form-control", @required = true })
+                        <label>Niveles pastel</label>
+                        @Html.DropDownList("OpcionElegir", forma, new { @class = "form-control", @required = true })
+                        <label>Comentarios adicionales</label>
+                        @Html.TextArea("Comentario", new { @class = "form-control", @required = true })
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success">Cotizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
 @section scripts{
     <!-- BEGIN PAGE LEVEL SCRIPTS -->
