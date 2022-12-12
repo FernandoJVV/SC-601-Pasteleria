@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Web;
 
@@ -114,8 +115,10 @@ namespace Pasteleria.Models.Modelos
             using (HttpClient client = new HttpClient()) {
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Usuario/ObtenerId?email="+ email;
 
-                HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
+                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
                 if (respuesta.IsSuccessStatusCode) {
                     idUsuario = respuesta.Content.ReadAsAsync<int>().Result;
                 }
