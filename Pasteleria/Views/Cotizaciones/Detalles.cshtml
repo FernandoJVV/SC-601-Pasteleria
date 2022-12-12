@@ -1,0 +1,207 @@
+﻿@model Pasteleria.Models.Objetos.CotizacionObj
+@{
+    ViewBag.Title = "Detalles";
+    var esUsuario = (Session["RolUsuario"].ToString() == "Usuario");
+    var habilitarAdmin = false;
+    if (esUsuario) {
+        habilitarAdmin = true;
+    }
+}
+
+@section pageCSS{
+    <link href="~/assets/css/users/account-setting.css" rel="stylesheet" type="text/css" />
+}
+
+@{
+    var listaOpciones = ViewBag.Opciones as List<Pasteleria.Models.Objetos.OpcionObj>;
+    var niveles = (from x in listaOpciones where x.NombreCategoria.Equals("Niveles") select x.Descripcion).FirstOrDefault();
+    var sabor = (from x in listaOpciones where x.NombreCategoria.Equals("Sabor") select x.Descripcion).FirstOrDefault();
+    var color = (from x in listaOpciones where x.NombreCategoria.Equals("Color externo") select x.Descripcion).FirstOrDefault();
+    var decoracion = (from x in listaOpciones where x.NombreCategoria.Equals("Decoración") select x.Descripcion).FirstOrDefault();
+    var forma = (from x in listaOpciones where x.NombreCategoria.Equals("Forma") select x.Descripcion).FirstOrDefault();
+
+}
+
+<div class="page-header">
+    <div class="page-title">
+        <h3>Detalles de la cotización</h3>
+    </div>
+</div>
+
+<div class="account-settings-container layout-top-spacing">
+
+    <div class="account-content">
+        <div class="scrollspy-example" data-spy="scroll" data-target="#account-settings-scroll" data-offset="-100">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+                    @using (Html.BeginForm("Editar", "Cotizaciones", FormMethod.Post)) {
+                        @Html.AntiForgeryToken()
+                        <div class="section general-info">
+                            <div class="info">
+                                <h6 class="">Información general</h6>
+                                <div class="row">
+                                    <div class="col-lg-11 mx-auto">
+                                        <div class="row">
+                                            <div class="col-xl-10 col-lg-12 col-md-8 mt-md-0 mt-4">
+                                                <div class="form">
+                                                    <div class="row">
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                                <label for="usuariolbl">Usuario</label>
+                                                                @Html.HiddenFor(model => model.COT_ID)
+                                                                @Html.EditorFor(model => model.COT_USU_MAIL, new { htmlAttributes = new { @class = "form-control", @disabled = true } })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                                <label for="usuariolbl">Precio estimado</label>
+                                                                @Html.EditorFor(model => model.COT_ESTIMADO, new { htmlAttributes = new { @class = "form-control", @required = true } })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <label for="usuariolbl">Estado</label>
+                                                            @Html.DropDownListFor(model => model.COT_EST_DESC, ViewBag.ComboEstados as List<SelectListItem>, new { @class = "form-control", @required = true })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="info">
+                                <h6 class="">Opciones seleccionadas</h6>
+                                <div class="row">
+                                    <div class="col-lg-11 mx-auto">
+                                        <div class="row">
+                                            <div class="col-xl-10 col-lg-12 col-md-8 mt-md-0 mt-4">
+                                                <div class="form">
+                                                    <div class="row">
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                                <label for="sabor">Cantidad de niveles</label>
+                                                                <input disabled class="form-control" type="number" name="name" value="@niveles" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                                <label for="sabor">Sabor</label>
+                                                                <input disabled class="form-control" type="text" name="name" value="@sabor" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <label for="sabor">Decoración</label>
+                                                            <input disabled class="form-control" type="text" name="name" value="@decoracion" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                                <label for="sabor">Forma</label>
+                                                                <input disabled class="form-control" type="text" name="name" value="@forma" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                                <label for="sabor">Color externo</label>
+                                                                <input disabled class="form-control" type="text" name="name" value="@color" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        @if (!esUsuario) {
+                                            <div class="row">
+                                                <div class="col-md-12 text-right mb-5">
+                                                    <input class="btn btn-primary" type="submit" name="btnSubmit" value="Guardar" />
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+                    <form id="about" class="section about">
+                        <div class="info">
+                            <h5 class="">Comentarios</h5>
+                            <div class="row">
+                                <div class="col-md-11 mx-auto">
+                                    @foreach (var item in ViewBag.Comentarios as List<Pasteleria.Models.Objetos.ComentarioObj>) {
+                                        <div class="form-group">
+                                            <label class="bold" for="aboutBio">@item.Usuario</label>
+                                            <p class="form-control">
+                                                @item.Comentario
+                                            </p>
+                                        </div>
+                                    }
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                @if (((Model.COT_EST_DESC != "Finalizada") && esUsuario) || !esUsuario) {
+                    <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+                        @using (Html.BeginForm("AgregarComentario", "Cotizaciones", FormMethod.Post, new { @class = "section work-platforms" })) {
+                            @Html.AntiForgeryToken()
+                            <div class="info">
+                                <h5 class="">Ingresar nuevo comentario</h5>
+                                <div class="row">
+                                    <div class="col-md-11 mx-auto">
+
+                                        <div class="platform-div">
+                                            <div class="form-group">
+                                                <label for="platform-description">@Session["RolUsuario"].ToString()</label>
+                                                <input class="" type="hidden" name="IdCotizacion" value="@Model.COT_ID" />
+                                                <textarea name="Comentario" required class="form-control mb-4"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-12 text-right mb-5">
+                                        <button id="add-work-platforms" class="btn btn-primary">Añadir</button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#COT_EST_DESC option").each(function () {
+                if ($(this).text() == '@Model.COT_EST_DESC') {
+                    $(this).attr('selected', 'selected');
+                }
+            });
+        });
+
+    </script>
+    @if (esUsuario) {
+        <script>
+            $(document).ready(function () {
+                $('#COT_ESTIMADO').prop('disabled', true);
+                $('#COT_EST_DESC').prop('disabled', true);
+            });
+        </script>
+    }
+}
