@@ -4,6 +4,15 @@
     ViewBag.Title = "UsuariosConsulta";
 }
 
+
+@section pageCSS{
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link rel="stylesheet" type="text/css" href="~/plugins/table/datatable/datatables.css">
+    <link rel="stylesheet" type="text/css" href="~/plugins/table/datatable/dt-global_style.css">
+}
+
+@Html.AntiForgeryToken()
+
 <div class="jumbotron">
     <!--Encabezado-->
     <nav class="navbar navbar-light bg-light">
@@ -12,14 +21,14 @@
             <h1 class="d-inline text-center"> Mantenimiento de Usuarios</h1>
         </a>
         @Html.ActionLink("Agregar Nuevo Usuario", "UsuariosRegistrar", "Usuario", null, new { @class = "btn btn-info pull-right mr-3" })
-        
+
     </nav>
 
     <!--Tabla-->
     <div class="row">
         <div class="col-md-12">
             <div class="table-responsive-md">
-                <table class="table table-hover table-bordered table-striped mt-3">
+                <table class="table table-hover table-bordered table-striped mt-3" id="tablaUsuarios">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Correo</th>
@@ -46,11 +55,24 @@
                                     @Html.DisplayFor(modelItem => item.estado)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Actualizar", "UsuariosActualizar", "Usuario", new { id = item.id }, new { @class = "btn btn-dark" }) |
-                                    <!--En progreso el inactivar-->
-                                    <button type="button" class="btn btn-danger" data-toggle="modal">
-                                        Inactivar
-                                    </button>
+
+                                    @if (Session["IdUsuario"].ToString() != item.id.ToString())
+                                    {
+                                        @Html.ActionLink("Actualizar", "UsuariosActualizar", "Usuario", new { id = item.id }, new { @class = "btn btn-dark" })
+                                        <!--En progreso el inactivar-->
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-book-id="@item.id">
+                                            Cambiar Estado
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        @Html.ActionLink("Actualizar", "UsuariosActualizar", "Usuario", new { id = item.id }, new { @class = "btn btn-dark", @style = "cursor:not-allowed" })
+                                        <!--En progreso el inactivar-->
+                                        <button type="button" class="btn btn-danger" style="cursor:not-allowed">
+                                            Cambiar Estado
+                                        </button>
+                                    }
+
                                 </td>
                             </tr>
                         }
@@ -63,3 +85,79 @@
     </div>
 </div>
 
+@section scripts
+{
+
+    <script src="~/plugins/table/datatable/datatables.js"></script>
+
+    <script>
+
+        $('#exampleModal').on('show.bs.modal', function (e) {
+            console.log("test");
+            var bookId = $(e.relatedTarget).data('book-id');
+            $("#id").val(bookId);
+        });
+
+        function CambiarEstado() {
+
+            $.ajax({
+                type: 'POST',
+                url: '/Usuario/CambiarEstadoUsuario',
+                data: {
+                    "id": $("#id").val()
+                },
+                dataType: 'json',
+                success: function (data) {
+                    window.location.href = "/Usuario/UsuariosConsulta"
+                },
+                error: function (data) {
+                    alert('Error')
+                }
+            });
+
+        }
+
+        $(document).ready(function () {
+            $('#tablaUsuarios').DataTable({
+                "oLanguage": {
+                    "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+                    "sInfo": "Mostrando página _PAGE_ de _PAGES_",
+                    "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                    "sSearchPlaceholder": "Buscar...",
+                    "sLengthMenu": "Resultados :  _MENU_",
+                },
+                "stripeClasses": [],
+                "lengthMenu": [7, 10, 20, 50],
+                "pageLength": 7
+            });
+        });
+
+    </script>
+}
+
+@section modals
+{
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Cambiar Estado</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <p>Está seguro de cambiar el estado del usuario?</p>
+
+                    @Html.Hidden("id", "")
+
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-primary" value="Continuar" onclick="CambiarEstado();" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
