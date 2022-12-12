@@ -30,7 +30,8 @@ namespace Pasteleria.Models.Objetos
             if (filterContext.HttpContext.Session["CodigoSeguridad"] == null || rolNulo)
             {
                 filterContext.Result = cambiarRuta();
-
+                base.OnActionExecuting(filterContext);
+                return;
             }
 
             if (!rolNulo)
