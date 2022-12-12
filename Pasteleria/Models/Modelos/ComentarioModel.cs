@@ -13,28 +13,46 @@ namespace Pasteleria.Models.Modelos
     public class ComentarioModel
     {
         public List<ComentarioObj> ObtenerComentarios(int id) {
-            using (HttpClient client = new HttpClient()) {
-                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Cotizaciones/Comentarios?id=" + id;
-                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Cotizaciones/Comentarios?id=" + id;
+                    string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                    HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
 
-                if (respuesta.IsSuccessStatusCode) {
-                    return respuesta.Content.ReadAsAsync<List<ComentarioObj>>().Result;
+                    if (respuesta.IsSuccessStatusCode)
+                    {
+                        return respuesta.Content.ReadAsAsync<List<ComentarioObj>>().Result;
+                    }
                 }
+                return null;
             }
-            return null;
+            catch (Exception)
+            {
+                Exception ex = new Exception("Error al cargar lista de comentarios.");
+                return null;
+            }
         }
 
         public void AgregarComentarios(string email, ComentarioObj comentario) {
-            using (HttpClient client = new HttpClient()) {
-                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Cotizaciones/Comentarios?idCotizacion=" + comentario.IdCotizacion+ "&email=" + email;
-                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Cotizaciones/Comentarios?idCotizacion=" + comentario.IdCotizacion + "&email=" + email;
+                    string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                JsonContent contenido = JsonContent.Create(comentario);
-                HttpResponseMessage respuesta = client.PostAsync(rutaApi, contenido).Result;
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                    JsonContent contenido = JsonContent.Create(comentario);
+                    HttpResponseMessage respuesta = client.PostAsync(rutaApi, contenido).Result;
+                }
+            }
+            catch (Exception)
+            {
+                Exception ex = new Exception("Error al comentario en la cotizacion.");
             }
         }
     }
