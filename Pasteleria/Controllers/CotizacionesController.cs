@@ -64,7 +64,7 @@ namespace Pasteleria.Controllers
         public ActionResult Editar(int COT_ID, decimal COT_ESTIMADO, int COT_EST_DESC) {
             try {
                 var cotizacion = _cotizacionModel.ActualizarCotizacion(COT_ID, COT_ESTIMADO, COT_EST_DESC);
-                TempData["Mensaje"] = "Modificación realizada con exito";
+                TempData["Mensaje"] = "Modificación realizada con éxito";
 
                 return RedirectToAction("Detalles", new { id = COT_ID });
             }

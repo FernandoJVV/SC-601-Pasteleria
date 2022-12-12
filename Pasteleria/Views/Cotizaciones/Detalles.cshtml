@@ -31,7 +31,8 @@
         <div class="scrollspy-example" data-spy="scroll" data-target="#account-settings-scroll" data-offset="-100">
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
-                    @using (Html.BeginForm("Editar", "Cotizaciones", FormMethod.Post)) {
+                    @using (Html.BeginForm("Editar", "Cotizaciones", FormMethod.Post))
+                    {
                         @Html.AntiForgeryToken()
                         <div class="section general-info">
                             <div class="info">
@@ -52,7 +53,7 @@
                                                         <div class="col-sm-3">
                                                             <div class="form-group">
                                                                 <label for="usuariolbl">Precio estimado</label>
-                                                                @Html.EditorFor(model => model.COT_ESTIMADO, new { htmlAttributes = new { @class = "form-control", @required = true } })
+                                                                @Html.EditorFor(model => model.COT_ESTIMADO, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return numbersOnly(event)", @required = true } })
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3">
@@ -111,7 +112,8 @@
 
                                             </div>
                                         </div>
-                                        @if (!esUsuario) {
+                                        @if (!esUsuario)
+                                        {
                                             <div class="row">
                                                 <div class="col-md-12 text-right mb-5">
                                                     <input class="btn btn-primary" type="submit" name="btnSubmit" value="Guardar" />
@@ -132,7 +134,8 @@
                             <h5 class="">Comentarios</h5>
                             <div class="row">
                                 <div class="col-md-11 mx-auto">
-                                    @foreach (var item in ViewBag.Comentarios as List<Pasteleria.Models.Objetos.ComentarioObj>) {
+                                    @foreach (var item in ViewBag.Comentarios as List<Pasteleria.Models.Objetos.ComentarioObj>)
+                                    {
                                         <div class="form-group">
                                             <label class="bold" for="aboutBio">@item.Usuario</label>
                                             <p class="form-control">
@@ -147,9 +150,11 @@
                         </div>
                     </form>
                 </div>
-                @if (((Model.COT_EST_DESC != "Finalizada") && esUsuario) || !esUsuario) {
+                @if (((Model.COT_EST_DESC != "Finalizada") && esUsuario) || !esUsuario)
+                {
                     <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
-                        @using (Html.BeginForm("AgregarComentario", "Cotizaciones", FormMethod.Post, new { @class = "section work-platforms" })) {
+                        @using (Html.BeginForm("AgregarComentario", "Cotizaciones", FormMethod.Post, new { @class = "section work-platforms" }))
+                        {
                             @Html.AntiForgeryToken()
                             <div class="info">
                                 <h5 class="">Ingresar nuevo comentario</h5>
@@ -220,8 +225,18 @@
             }
         }
 
+        function numbersOnly(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            if (charCode != 46 && charCode > 31
+                && (charCode < 48 || charCode > 57))
+                return false;
+
+            return true;
+        }
+
     </script>
-    @if (esUsuario) {
+    @if (esUsuario)
+    {
         <script>
             $(document).ready(function () {
                 $('#COT_ESTIMADO').prop('disabled', true);

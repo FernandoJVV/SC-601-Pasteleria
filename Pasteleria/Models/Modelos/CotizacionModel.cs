@@ -13,7 +13,8 @@ namespace Pasteleria.Models.Modelos
 {
     public class CotizacionModel
     {
-        public List<CotizacionObj> ObtenerCotizaciones() {
+        public List<CotizacionObj> ObtenerCotizaciones()
+        {
             try
             {
                 using (HttpClient client = new HttpClient())
@@ -38,7 +39,8 @@ namespace Pasteleria.Models.Modelos
             }
 
         }
-        public CotizacionObj ObtenerCotizacion(int id) {
+        public CotizacionObj ObtenerCotizacion(int id)
+        {
             try
             {
                 using (HttpClient client = new HttpClient())
@@ -63,7 +65,8 @@ namespace Pasteleria.Models.Modelos
             }
         }
 
-        public List<EstadoObj> ObtenerEstados() {
+        public List<EstadoObj> ObtenerEstados()
+        {
             try
             {
                 using (HttpClient client = new HttpClient())
@@ -88,7 +91,8 @@ namespace Pasteleria.Models.Modelos
             }
         }
 
-        public bool ActualizarCotizacion(int COT_ID, decimal cOT_ESTIMADO, int cOT_EST_DESC) {
+        public bool ActualizarCotizacion(int COT_ID, decimal cOT_ESTIMADO, int cOT_EST_DESC)
+        {
             if (!ActualizarMonto(COT_ID, cOT_ESTIMADO))
                 return false;
             if (!ActualizarEstado(COT_ID, cOT_EST_DESC))
@@ -97,7 +101,8 @@ namespace Pasteleria.Models.Modelos
             return true;
         }
 
-        private bool ActualizarMonto(int COT_ID, decimal COT_ESTIMADO) {
+        private bool ActualizarMonto(int COT_ID, decimal COT_ESTIMADO)
+        {
             try
             {
                 using (HttpClient client = new HttpClient())
@@ -119,7 +124,7 @@ namespace Pasteleria.Models.Modelos
                     {
                         return true;
                     }
-                    
+
                 }
                 return false;
             }
@@ -128,10 +133,11 @@ namespace Pasteleria.Models.Modelos
                 Exception ex = new Exception("Error al actualizar monto de cotizacion.");
                 return false;
             }
-            
+
         }
 
-        private bool ActualizarEstado(int COT_ID, int COT_EST_DESC) {
+        private bool ActualizarEstado(int COT_ID, int COT_EST_DESC)
+        {
             try
             {
                 using (HttpClient client = new HttpClient())
@@ -163,7 +169,8 @@ namespace Pasteleria.Models.Modelos
             }
         }
 
-        public List<OpcionObj> ObtenerOpcionesCotizacion(int id) {
+        public List<OpcionObj> ObtenerOpcionesCotizacion(int id)
+        {
             try
             {
                 using (HttpClient client = new HttpClient())
@@ -188,7 +195,8 @@ namespace Pasteleria.Models.Modelos
             }
         }
 
-        public List<CotizacionObj> ListarCotizacionUsuario(string email) {
+        public List<CotizacionObj> ListarCotizacionUsuario(string email)
+        {
             try
             {
                 var idUsuario = GetUserId(email);
@@ -216,16 +224,18 @@ namespace Pasteleria.Models.Modelos
             }
         }
 
-        public int CrearCotizacion(DTOCotizacion dtoCot, string email) {
+        public int CrearCotizacion(DTOCotizacion dtoCot, string email)
+        {
             try
             {
                 var idUsuario = GetUserId(email);
 
                 dtoCot.COT_USU_ID = idUsuario;
 
-            using (HttpClient client = new HttpClient()) {
-                string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Cotizaciones/RegistrarCotizaciones";
-                string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
+                using (HttpClient client = new HttpClient())
+                {
+                    string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Cotizaciones/RegistrarCotizaciones";
+                    string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
 
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                     JsonContent content = JsonContent.Create(dtoCot);
@@ -246,7 +256,8 @@ namespace Pasteleria.Models.Modelos
             }
         }
 
-        private int GetUserId(string email) {
+        private int GetUserId(string email)
+        {
             try
             {
                 using (HttpClient client = new HttpClient())
@@ -258,18 +269,28 @@ namespace Pasteleria.Models.Modelos
 
 
 
-                HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
-                if (respuesta.IsSuccessStatusCode) {
-                    return respuesta.Content.ReadAsAsync<int>().Result;
+                    HttpResponseMessage respuesta = client.GetAsync(rutaApi).Result;
+                    if (respuesta.IsSuccessStatusCode)
+                    {
+                        return respuesta.Content.ReadAsAsync<int>().Result;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
                 }
-                else {
-                    return 0;
-                }
+            }
+            catch (Exception)
+            {
+                Exception ex = new Exception("Error al crear cotizacion.");
+                return 0;
             }
         }
 
-        public bool AgregarOpcionCotizacion(DTOOpcionXCotizacionObj dtoOpcion) {
-            using (HttpClient client = new HttpClient()) {
+        public bool AgregarOpcionCotizacion(DTOOpcionXCotizacionObj dtoOpcion)
+        {
+            using (HttpClient client = new HttpClient())
+            {
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Cotizaciones/RegistroOpcionXCotizacion";
 
                 string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
@@ -278,17 +299,15 @@ namespace Pasteleria.Models.Modelos
 
                 HttpResponseMessage respuesta = client.PostAsync(rutaApi, content).Result;
 
-                if (respuesta.IsSuccessStatusCode) {
+                if (respuesta.IsSuccessStatusCode)
+                {
                     return true;
                 }
-                else {
+                else
+                {
                     return false;
                 }
             }
         }
-    }
-
-
     }//class
-
 }
