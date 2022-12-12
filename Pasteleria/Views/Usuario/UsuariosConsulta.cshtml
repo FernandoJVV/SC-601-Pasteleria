@@ -93,6 +93,7 @@
     <script>
 
         $('#exampleModal').on('show.bs.modal', function (e) {
+            console.log("test");
             var bookId = $(e.relatedTarget).data('book-id');
             $("#id").val(bookId);
         });
