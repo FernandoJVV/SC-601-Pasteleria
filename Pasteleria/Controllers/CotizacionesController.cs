@@ -80,7 +80,7 @@ namespace Pasteleria.Controllers
             try {
                 var email = Session["CorreoUsuario"].ToString();
 
-                var cotizacion = _comentarioModel.AgregarComentarios(email, com);
+                _comentarioModel.AgregarComentarios(email, com);
                 TempData["Mensaje"] = "Comentario añadido exitosamente";
 
                 return RedirectToAction("Detalles", new { id = com.IdCotizacion });

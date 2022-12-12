@@ -27,7 +27,7 @@ namespace Pasteleria.Models.Modelos
             return null;
         }
 
-        public List<ComentarioObj> AgregarComentarios(string email, ComentarioObj comentario) {
+        public void AgregarComentarios(string email, ComentarioObj comentario) {
             using (HttpClient client = new HttpClient()) {
                 string rutaApi = ConfigurationManager.AppSettings["rutaApi"] + "/api/Cotizaciones/Comentarios?idCotizacion=" + comentario.IdCotizacion+ "&email=" + email;
                 string token = HttpContext.Current.Session["CodigoSeguridad"].ToString();
@@ -35,11 +35,7 @@ namespace Pasteleria.Models.Modelos
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 JsonContent contenido = JsonContent.Create(comentario);
                 HttpResponseMessage respuesta = client.PostAsync(rutaApi, contenido).Result;
-                if (respuesta.IsSuccessStatusCode) {
-                    return respuesta.Content.ReadAsAsync<List<ComentarioObj>>().Result;
-                }
             }
-            return null;
         }
     }
 }

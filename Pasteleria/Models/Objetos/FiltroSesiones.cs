@@ -26,11 +26,12 @@ namespace Pasteleria.Models.Objetos
             {
                 filterContext.Result = cambiarRuta();
             }
+            if (filterContext.RouteData.Values["controller"].ToString() != "Home") {
+                var rol = filterContext.HttpContext.Session["RolUsuario"].ToString();
 
-            var rol = filterContext.HttpContext.Session["RolUsuario"].ToString();
-
-            if (rol == "Usuario" && !allowUser) {
-                filterContext.Result = cambiarRuta();
+                if (rol == "Usuario" && !allowUser) {
+                    filterContext.Result = cambiarRuta();
+                }
             }
 
             base.OnActionExecuting(filterContext);

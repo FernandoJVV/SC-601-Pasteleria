@@ -8,6 +8,8 @@
 
 
 
+@Html.Hidden("MjsError", (string)@ViewBag.MsjInicio)
+@Html.Hidden("MjsExito", (string)@ViewBag.MsjExito)
 @using (Html.BeginForm("Validar", "Usuario", FormMethod.Post)) {
     @Html.AntiForgeryToken();
     <div class="form">
@@ -88,6 +90,15 @@
                     confirmButtonText: 'Aceptar'
                 });
 
+            }
+            if ($("#MjsExito").val() != "") {
+                Swal.fire({
+                    position: 'top-end',
+                    title: 'Atención',
+                    text: $("#MjsExito").val(),
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar'
+                });
             }
         }
 

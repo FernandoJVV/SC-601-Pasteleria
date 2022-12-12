@@ -25,7 +25,14 @@ namespace Pasteleria.Controllers
             if (TempData.ContainsKey("mensaje"))
             {
                 ViewBag.MsjInicio = TempData["mensaje"].ToString();
-            }; 
+            };
+
+            if (TempData["MsjInicio"] != null) {
+                ViewBag.MsjInicio = TempData["MsjInicio"].ToString();
+            }
+            else if(TempData["MsjExito"] != null) {
+                ViewBag.MsjExito = TempData["MsjExito"].ToString();
+            }
 
             return View();
         }

@@ -67,14 +67,15 @@ namespace Pasteleria.Controllers
         public ActionResult NuevoRegistro(UsuarioObj usuario) {
             try {
                 var resultado = modelUsuario.NuevoRegistro(usuario);
+                TempData["MsjExito"] = "Se ha registrado el usuario extiosamente.";
                 if (resultado) {
                     return RedirectToAction("Index", "Home");
                 }
             }
             catch (Exception) {
-
+                TempData["MsjInicio"] = "Error al registrar el usuario.";
             }
-            return RedirectToAction("Registrar", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         [FiltroSesiones]
