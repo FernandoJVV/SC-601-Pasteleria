@@ -27,7 +27,8 @@
         <h3>Detalles de la cotización</h3>
     </div>
 </div>
-
+@Html.Hidden("MjsError", (string)@ViewBag.MsjInicio)
+@Html.Hidden("MjsExito", (string)@ViewBag.MjsExito)
 <div class="account-settings-container layout-top-spacing">
 
     <div class="account-content">
@@ -186,14 +187,44 @@
 
 
 @section scripts{
+    <script src="~/plugins/sweetalerts/sweetalert2.min.js"></script>
+    <script src="~/plugins/sweetalerts/sweetalert.js"></script>
     <script>
         $(document).ready(function () {
+            PantallaCargada();
             $("#COT_EST_DESC option").each(function () {
                 if ($(this).text() == '@Model.COT_EST_DESC') {
                     $(this).attr('selected', 'selected');
                 }
             });
         });
+
+
+
+        function PantallaCargada() {
+            if ($("#MjsError").val() != "") {
+
+                Swal.fire({
+                    position: 'top-end',
+                    title: 'Atención',
+                    text: $("#MjsError").val(),
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                });
+
+            }
+            if ($("#MjsExito").val() != "") {
+
+                Swal.fire({
+                    position: 'top-end',
+                    title: 'Atención',
+                    text: $("#MjsExito").val(),
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar'
+                });
+
+            }
+        }
 
     </script>
     @if (esUsuario) {
@@ -204,4 +235,6 @@
             });
         </script>
     }
+
+
 }

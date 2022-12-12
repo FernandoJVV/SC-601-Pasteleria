@@ -46,6 +46,11 @@ namespace Pasteleria.Controllers
                 ViewBag.Opciones = opcionesCotizacion;
                 ViewBag.ComboEstados = opciones;
                 ViewBag.Comentarios = comentarios;
+                if (TempData["Mensaje"] != null) {
+                    ViewBag.MsjExito = TempData["Mensaje"].ToString();
+                }else if (TempData["Error"] != null) {
+                    ViewBag.MsjInicio = TempData["Error"].ToString();
+                }
                 return View(cotizacion);
             }
             catch (Exception) {

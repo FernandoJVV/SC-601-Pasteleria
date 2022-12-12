@@ -6,7 +6,7 @@
 <h1 class="">Login <a href="https://www.facebook.com/artedulis" target="_blank"><span class="brand-name">Art Edulis</span></a></h1>
 <p class="signup-link">&#191;No tienes una cuenta? <a href="@Url.Action("Registrar","Home")">Crea una cuenta</a></p>
 
-@Html.Hidden("MjsError", (string)@ViewBag.MsjInicio)
+
 
 @using (Html.BeginForm("Validar", "Usuario", FormMethod.Post)) {
     @Html.AntiForgeryToken();
@@ -93,28 +93,3 @@
 
     </script>
 }
-
-
-
-<script>
-
-
-    $(document).ready(function () {
-        PantallaCargada();
-    });
-
-    function PantallaCargada() {
-        if ($("#MjsError").val() != "") {
-
-            Swal.fire({
-                position: 'top-end',
-                title: 'Atencion',
-                text: $("#MjsError").val(),
-                icon: 'error',
-                confirmButtonText: 'Aceptar'
-            });
-
-        }
-    }
-
-</script>
