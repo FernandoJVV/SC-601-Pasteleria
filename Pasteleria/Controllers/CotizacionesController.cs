@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace Pasteleria.Controllers
 {
+    [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
     public class CotizacionesController : Controller
     {
         private CotizacionModel _cotizacionModel = new CotizacionModel();
